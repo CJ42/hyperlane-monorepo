@@ -20,11 +20,14 @@ import { TokenType, gasOverhead } from './config.js';
 import {
   HypERC20Factories,
   HypERC721Factories,
+  HypLSP7Factories,
   TokenFactories,
   hypERC20contracts,
   hypERC20factories,
   hypERC721contracts,
   hypERC721factories,
+  hypLSP7contracts,
+  hypLSP7factories,
 } from './contracts.js';
 import {
   HypTokenRouterConfig,
@@ -78,6 +81,7 @@ abstract class TokenDeployer<
     }
   }
 
+  // TODO: add parameter for LSP4Metadata
   async initializeArgs(
     chain: ChainName,
     config: HypTokenRouterConfig,
@@ -100,6 +104,7 @@ abstract class TokenDeployer<
     }
   }
 
+  // TODO: resolve metadata differently here for HypLSP7 / HypLSP7Collateral
   static async deriveTokenMetadata(
     multiProvider: MultiProvider,
     configMap: WarpRouteDeployConfig,
@@ -267,5 +272,41 @@ export class HypERC721Deployer extends TokenDeployer<HypERC721Factories> {
 
   routerContractName(config: HypTokenRouterConfig): string {
     return hypERC721contracts[this.routerContractKey(config)];
+  }
+}
+
+export class HypLSP7Deployer extends TokenDeployer<HypLSP7Factories> {
+  constructor(
+    multiProvider: MultiProvider,
+    ismFactory?: HyperlaneIsmFactory,
+    contractVerifier?: ContractVerifier,
+    concurrentDeploy = false,
+  ) {
+    super(
+      multiProvider,
+      hypLSP7factories,
+      'HypLSP7Deployer',
+      ismFactory,
+      contractVerifier,
+      concurrentDeploy,
+    );
+  }
+
+  router(contracts: HyperlaneContracts<HypLSP7Factories>): GasRouter {
+    for (const key of objKeys(hypLSP7factories)) {
+      if (contracts[key]) {
+        return contracts[key];
+      }
+    }
+    throw new Error('No matching contract found');
+  }
+
+  routerContractKey(config: HypTokenRouterConfig): keyof HypLSP7Factories {
+    assert(config.type in hypLSP7factories, 'Invalid HypLSP7 token type');
+    return config.type as keyof HypLSP7Factories;
+  }
+
+  routerContractName(config: HypTokenRouterConfig): string {
+    return hypLSP7contracts[this.routerContractKey(config)];
   }
 }

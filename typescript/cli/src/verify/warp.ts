@@ -12,6 +12,8 @@ import {
   WarpCoreConfig,
   hypERC20contracts,
   hypERC20factories,
+  hypLSP7contracts,
+  hypLSP7factories,
   isProxy,
   proxyImplementation,
   verificationUtils,
@@ -69,7 +71,12 @@ export async function runVerifyWarpRoute({
       chainName,
       deployedContractAddress,
     );
-    const contractName = hypERC20contracts[tokenType];
+    const contractName =
+      tokenType === TokenType.collateralLSP7 ||
+      tokenType === TokenType.syntheticLSP7
+        ? hypLSP7contracts[tokenType]
+        : hypERC20contracts[tokenType];
+
     const implementationInput = await verificationUtils.getImplementationInput({
       chainName,
       contractName,
@@ -123,10 +130,22 @@ async function getWarpRouteFactory(
     warpRouteAddress,
   )) as Exclude<TokenType, TokenType.syntheticUri | TokenType.collateralUri>;
 
-  const factory = objFilter(
-    hypERC20factories,
-    (t, _contract): _contract is any => t === tokenType,
-  )[tokenType];
+  let factory;
+
+  if (
+    tokenType === TokenType.collateralLSP7 ||
+    tokenType === TokenType.syntheticLSP7
+  ) {
+    factory = objFilter(
+      hypLSP7factories,
+      (t, _contract): _contract is any => t === tokenType,
+    )[tokenType];
+  } else {
+    factory = objFilter(
+      hypERC20factories,
+      (t, _contract): _contract is any => t === tokenType,
+    )[tokenType];
+  }
 
   return { factory, tokenType };
 }
