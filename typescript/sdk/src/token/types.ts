@@ -70,7 +70,7 @@ export const SyntheticTokenConfigSchema = TokenMetadataSchema.partial().extend({
     TokenType.fastSynthetic,
   ]),
 });
-export type SyntheticTokenConfig = z.infer<typeof CollateralTokenConfigSchema>;
+export type SyntheticTokenConfig = z.infer<typeof SyntheticTokenConfigSchema>;
 export const isSyntheticTokenConfig = isCompliant(SyntheticTokenConfigSchema);
 
 export const SyntheticRebaseTokenConfigSchema =

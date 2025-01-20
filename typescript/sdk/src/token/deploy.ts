@@ -21,6 +21,7 @@ import {
   HypERC20Factories,
   HypERC721Factories,
   HypLSP7Factories,
+  HypLSP8Factories,
   TokenFactories,
   hypERC20contracts,
   hypERC20factories,
@@ -28,6 +29,8 @@ import {
   hypERC721factories,
   hypLSP7contracts,
   hypLSP7factories,
+  hypLSP8contracts,
+  hypLSP8factories,
 } from './contracts.js';
 import {
   HypTokenRouterConfig,
@@ -308,5 +311,39 @@ export class HypLSP7Deployer extends TokenDeployer<HypLSP7Factories> {
 
   routerContractName(config: HypTokenRouterConfig): string {
     return hypLSP7contracts[this.routerContractKey(config)];
+  }
+}
+
+export class HypLSP8Deployer extends TokenDeployer<HypLSP8Factories> {
+  constructor(
+    multiProvider: MultiProvider,
+    ismFactory?: HyperlaneIsmFactory,
+    contractVerifier?: ContractVerifier,
+  ) {
+    super(
+      multiProvider,
+      hypLSP8factories,
+      'HypLSP8Deployer',
+      ismFactory,
+      contractVerifier,
+    );
+  }
+
+  router(contracts: HyperlaneContracts<HypLSP8Factories>): GasRouter {
+    for (const key of objKeys(hypLSP8factories)) {
+      if (contracts[key]) {
+        return contracts[key];
+      }
+    }
+    throw new Error('No matching contract found');
+  }
+
+  routerContractKey(config: HypTokenRouterConfig): keyof HypLSP8Factories {
+    assert(config.type in hypLSP8factories, 'Invalid LSP8 token type');
+    return config.type as keyof HypLSP8Factories;
+  }
+
+  routerContractName(config: HypTokenRouterConfig): string {
+    return hypLSP8contracts[this.routerContractKey(config)];
   }
 }
