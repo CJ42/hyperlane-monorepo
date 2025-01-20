@@ -13,6 +13,8 @@ import {
   HypFiatToken__factory,
   HypLSP7Collateral__factory,
   HypLSP7__factory,
+  HypLSP8Collateral__factory,
+  HypLSP8__factory,
   HypNativeScaled__factory,
   HypNative__factory,
   HypXERC20Lockbox__factory,
@@ -20,6 +22,9 @@ import {
 } from '@hyperlane-xyz/core';
 
 import { TokenType } from './config.js';
+
+// ERC20 standard
+// --------------
 
 export const hypERC20contracts = {
   [TokenType.fastCollateral]: 'FastHypERC20Collateral',
@@ -53,6 +58,9 @@ export const hypERC20factories = {
 };
 export type HypERC20Factories = typeof hypERC20factories;
 
+// LSP7 standard
+// -------------
+
 export const hypLSP7contracts = {
   [TokenType.syntheticLSP7]: 'HypLSP7',
   [TokenType.collateralLSP7]: 'HypLSP7Collateral',
@@ -65,13 +73,15 @@ export const hypLSP7factories = {
 };
 export type HypLSP7Factories = typeof hypLSP7factories;
 
+// ERC721 standard
+// ---------------
+
 export const hypERC721contracts = {
   [TokenType.collateralUri]: 'HypERC721URICollateral',
   [TokenType.collateral]: 'HypERC721Collateral',
   [TokenType.syntheticUri]: 'HypERC721URIStorage',
   [TokenType.synthetic]: 'HypERC721',
 };
-
 export type HypERC721contracts = typeof hypERC721contracts;
 
 export const hypERC721factories = {
@@ -82,7 +92,23 @@ export const hypERC721factories = {
 };
 export type HypERC721Factories = typeof hypERC721factories;
 
+// LSP8 standard
+// -------------
+
+export const hypLSP8contracts = {
+  [TokenType.collateral]: 'HypLSP8Collateral',
+  [TokenType.synthetic]: 'HypLSP8',
+};
+export type HypLSP8contracts = typeof hypLSP8contracts;
+
+export const hypLSP8factories = {
+  [TokenType.collateral]: new HypLSP8Collateral__factory(),
+  [TokenType.synthetic]: new HypLSP8__factory(),
+};
+export type HypLSP8Factories = typeof hypLSP8factories;
+
 export type TokenFactories =
   | HypERC20Factories
   | HypLSP7Factories
-  | HypERC721Factories;
+  | HypERC721Factories
+  | HypLSP8Factories;
