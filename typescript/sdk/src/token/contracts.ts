@@ -11,6 +11,8 @@ import {
   HypERC4626OwnerCollateral__factory,
   HypERC4626__factory,
   HypFiatToken__factory,
+  HypLSP7Collateral__factory,
+  HypLSP7__factory,
   HypNativeScaled__factory,
   HypNative__factory,
   HypXERC20Lockbox__factory,
@@ -51,6 +53,18 @@ export const hypERC20factories = {
 };
 export type HypERC20Factories = typeof hypERC20factories;
 
+export const hypLSP7contracts = {
+  [TokenType.syntheticLSP7]: 'HypLSP7',
+  [TokenType.collateralLSP7]: 'HypLSP7Collateral',
+};
+export type HypLSP7contracts = typeof hypLSP7contracts;
+
+export const hypLSP7factories = {
+  [TokenType.syntheticLSP7]: new HypLSP7__factory(),
+  [TokenType.collateralLSP7]: new HypLSP7Collateral__factory(),
+};
+export type HypLSP7Factories = typeof hypLSP7factories;
+
 export const hypERC721contracts = {
   [TokenType.collateralUri]: 'HypERC721URICollateral',
   [TokenType.collateral]: 'HypERC721Collateral',
@@ -68,4 +82,7 @@ export const hypERC721factories = {
 };
 export type HypERC721Factories = typeof hypERC721factories;
 
-export type TokenFactories = HypERC20Factories | HypERC721Factories;
+export type TokenFactories =
+  | HypERC20Factories
+  | HypLSP7Factories
+  | HypERC721Factories;
