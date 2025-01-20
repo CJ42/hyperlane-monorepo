@@ -11,6 +11,7 @@ export enum TokenStandard {
   // EVM
   ERC20 = 'ERC20',
   ERC721 = 'ERC721',
+  LSP7 = 'LSP7',
   EvmNative = 'EvmNative',
   EvmHypNative = 'EvmHypNative',
   EvmHypCollateral = 'EvmHypCollateral',
@@ -49,6 +50,7 @@ export enum TokenStandard {
 export const TOKEN_STANDARD_TO_PROTOCOL: Record<TokenStandard, ProtocolType> = {
   // EVM
   ERC20: ProtocolType.Ethereum,
+  LSP7: ProtocolType.Ethereum,
   ERC721: ProtocolType.Ethereum,
   EvmNative: ProtocolType.Ethereum,
   EvmHypNative: ProtocolType.Ethereum,
@@ -152,6 +154,7 @@ export const TOKEN_COSMWASM_STANDARDS = [
 export const TOKEN_TYPE_TO_STANDARD: Record<TokenType, TokenStandard> = {
   [TokenType.native]: TokenStandard.EvmHypNative,
   [TokenType.collateral]: TokenStandard.EvmHypCollateral,
+  [TokenType.collateralLSP7]: TokenStandard.EvmHypCollateral,
   [TokenType.collateralFiat]: TokenStandard.EvmHypCollateralFiat,
   [TokenType.XERC20]: TokenStandard.EvmHypXERC20,
   [TokenType.XERC20Lockbox]: TokenStandard.EvmHypXERC20Lockbox,
@@ -160,6 +163,7 @@ export const TOKEN_TYPE_TO_STANDARD: Record<TokenType, TokenStandard> = {
   [TokenType.collateralUri]: TokenStandard.EvmHypCollateral,
   [TokenType.fastCollateral]: TokenStandard.EvmHypCollateral,
   [TokenType.synthetic]: TokenStandard.EvmHypSynthetic,
+  [TokenType.syntheticLSP7]: TokenStandard.EvmHypSynthetic,
   [TokenType.syntheticRebase]: TokenStandard.EvmHypSyntheticRebase,
   [TokenType.syntheticUri]: TokenStandard.EvmHypSynthetic,
   [TokenType.fastSynthetic]: TokenStandard.EvmHypSynthetic,

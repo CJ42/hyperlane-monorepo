@@ -24,6 +24,7 @@ import {
   HypERC20Factories,
   HypERC721Deployer,
   HypERC721Factories,
+  HypLSP7Factories,
   HypTokenRouterConfig,
   HyperlaneContracts,
   HyperlaneContractsMap,
@@ -179,13 +180,20 @@ async function runDeployPlanStep({ context, warpDeployConfig }: DeployParams) {
 async function executeDeploy(
   params: DeployParams,
   apiKeys: ChainMap<string>,
-): Promise<HyperlaneContractsMap<HypERC20Factories | HypERC721Factories>> {
+): Promise<
+  HyperlaneContractsMap<
+    HypERC20Factories | HypLSP7Factories | HypERC721Factories
+  >
+> {
   logBlue('🚀 All systems ready, captain! Beginning deployment...');
 
   const {
     warpDeployConfig,
     context: { multiProvider, isDryRun, dryRunChain },
   } = params;
+
+  // TODO: change deployment to use HypLSP7 factory if needed
+  // deployer = new HypLSP7Deployer(multiProvider);
 
   const deployer = warpDeployConfig.isNft
     ? new HypERC721Deployer(multiProvider)
@@ -469,9 +477,7 @@ function generateTokenConfigs(
       decimals,
       symbol,
       name,
-      addressOrDenom:
-        contract[warpDeployConfig[chainName].type as keyof TokenFactories]
-          .address,
+      addressOrDenom: contract[config.type as keyof TokenFactories]['address'], // TODO, should be `.member` but type error
       collateralAddressOrDenom,
     });
   }
@@ -705,7 +711,7 @@ function mergeAllRouters(
   multiProvider: MultiProvider,
   existingConfigs: WarpRouteDeployConfig,
   deployedContractsMap: HyperlaneContractsMap<
-    HypERC20Factories | HypERC721Factories
+    HypERC20Factories | HypLSP7Factories | HypERC721Factories
   >,
   warpCoreConfigByChain: ChainMap<WarpCoreConfig['tokens'][number]>,
 ) {

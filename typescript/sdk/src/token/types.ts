@@ -32,6 +32,7 @@ export const CollateralTokenConfigSchema = TokenMetadataSchema.partial().extend(
   {
     type: z.enum([
       TokenType.collateral,
+      TokenType.collateralLSP7,
       TokenType.collateralVault,
       TokenType.collateralVaultRebase,
       TokenType.XERC20,
@@ -64,6 +65,7 @@ export const isCollateralRebaseTokenConfig = isCompliant(
 export const SyntheticTokenConfigSchema = TokenMetadataSchema.partial().extend({
   type: z.enum([
     TokenType.synthetic,
+    TokenType.syntheticLSP7,
     TokenType.syntheticUri,
     TokenType.fastSynthetic,
   ]),
