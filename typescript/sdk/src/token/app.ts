@@ -14,17 +14,14 @@ import { GasRouterApp } from '../router/RouterApps.js';
 import { ProxiedFactories, proxiedFactories } from '../router/types.js';
 import { ChainMap } from '../types.js';
 
-import {
-  HypERC20Factories, // HypLSP7Factories,
-  hypERC20factories, // hypLSP7factories,
-} from './contracts.js';
+import { HypTokenFactories, hypTokenfactories } from './contracts.js';
 
 export class HypERC20App extends GasRouterApp<
-  HypERC20Factories & ProxiedFactories,
+  HypTokenFactories & ProxiedFactories,
   TokenRouter
 > {
   constructor(
-    contractsMap: HyperlaneContractsMap<HypERC20Factories & ProxiedFactories>,
+    contractsMap: HyperlaneContractsMap<HypTokenFactories & ProxiedFactories>,
     multiProvider: MultiProvider,
     logger?: Logger,
     foreignDeployments: ChainMap<Address> = {},
@@ -32,8 +29,8 @@ export class HypERC20App extends GasRouterApp<
     super(contractsMap, multiProvider, logger, foreignDeployments);
   }
 
-  router(contracts: HyperlaneContracts<HypERC20Factories>): TokenRouter {
-    for (const key of objKeys(hypERC20factories)) {
+  router(contracts: HyperlaneContracts<HypTokenFactories>): TokenRouter {
+    for (const key of objKeys(hypTokenfactories)) {
       if (contracts[key]) {
         return contracts[key] as unknown as TokenRouter;
       }
@@ -42,49 +39,14 @@ export class HypERC20App extends GasRouterApp<
   }
 
   static fromAddressesMap(
-    addressesMap: HyperlaneAddressesMap<HypERC20Factories & ProxiedFactories>,
+    addressesMap: HyperlaneAddressesMap<HypTokenFactories & ProxiedFactories>,
     multiProvider: MultiProvider,
   ): HypERC20App {
     const helper = appFromAddressesMapHelper(
       addressesMap,
-      { ...hypERC20factories, ...proxiedFactories },
+      { ...hypTokenfactories, ...proxiedFactories },
       multiProvider,
     );
     return new HypERC20App(helper.contractsMap, helper.multiProvider);
   }
 }
-
-// export class HypLSP7App extends GasRouterApp<
-//   HypLSP7Factories & ProxiedFactories,
-//   TokenRouter
-// > {
-//   constructor(
-//     contractsMap: HyperlaneContractsMap<HypLSP7Factories & ProxiedFactories>,
-//     multiProvider: MultiProvider,
-//     logger?: Logger,
-//     foreignDeployments: ChainMap<Address> = {},
-//   ) {
-//     super(contractsMap, multiProvider, logger, foreignDeployments);
-//   }
-
-//   router(contracts: HyperlaneContracts<HypLSP7Factories>): TokenRouter {
-//     for (const key of objKeys(hypLSP7factories)) {
-//       if (contracts[key]) {
-//         return contracts[key] as unknown as TokenRouter;
-//       }
-//     }
-//     throw new Error('No router found in contracts');
-//   }
-
-//   static fromAddressesMap(
-//     addressesMap: HyperlaneAddressesMap<HypLSP7Factories & ProxiedFactories>,
-//     multiProvider: MultiProvider,
-//   ): HypLSP7App {
-//     const helper = appFromAddressesMapHelper(
-//       addressesMap,
-//       { ...hypLSP7factories, ...proxiedFactories },
-//       multiProvider,
-//     );
-//     return new HypLSP7App(helper.contractsMap, helper.multiProvider);
-//   }
-// }

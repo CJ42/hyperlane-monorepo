@@ -63,7 +63,7 @@ enum TokenType {
 }
 
 impl TokenType {
-    // Borrowed from HypERC20Deployer's `gasOverheadDefault`.
+    // Borrowed from HypTokenDeployer's `gasOverheadDefault`.
     fn gas_overhead_default(&self) -> u64 {
         // TODO: note these are the amounts specific to the EVM.
         // We should eventually make this configurable per protocol type before we

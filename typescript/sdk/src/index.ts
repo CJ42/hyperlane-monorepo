@@ -526,13 +526,13 @@ export { HypERC20App } from './token/app.js';
 export { HypERC20Checker } from './token/checker.js';
 export { TokenType } from './token/config.js';
 export {
-  HypERC20Factories,
-  HypERC721Factories,
+  HypTokenFactories,
+  HypNFTFactories,
   TokenFactories,
-  hypERC20contracts,
-  hypERC20factories,
+  hypTokencontracts,
+  hypTokenfactories,
 } from './token/contracts.js';
-export { HypERC20Deployer, HypERC721Deployer } from './token/deploy.js';
+export { HypTokenDeployer, HypNFTDeployer } from './token/deploy.js';
 export { EvmERC20WarpModule } from './token/EvmERC20WarpModule.js';
 export { EvmERC20WarpRouteReader } from './token/EvmERC20WarpRouteReader.js';
 export { IToken, TokenArgs, TokenConfigSchema } from './token/IToken.js';
