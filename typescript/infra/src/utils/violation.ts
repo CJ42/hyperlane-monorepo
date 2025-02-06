@@ -150,8 +150,8 @@ function logDiff(expected: AnyObject, actual: AnyObject): void {
   const sortedExpectedJson = stringify(sortedExpected, { space: 2 });
   const sortedActualJson = stringify(sortedActual, { space: 2 });
 
-  const parsedSortedExpected = JSON.parse(sortedExpectedJson);
-  const parsedSortedActual = JSON.parse(sortedActualJson);
+  const parsedSortedExpected = JSON.parse(sortedExpectedJson as any);
+  const parsedSortedActual = JSON.parse(sortedActualJson as any);
 
   const added = addedDiff(parsedSortedActual, parsedSortedExpected);
   const deleted = deletedDiff(parsedSortedActual, parsedSortedExpected);
