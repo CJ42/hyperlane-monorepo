@@ -40,7 +40,7 @@ import { AnnotatedEV5Transaction } from '../providers/ProviderType.js';
 import { ChainName, ChainNameOrId } from '../types.js';
 
 import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
-import { HypERC20Deployer } from './deploy.js';
+import { HypTokenDeployer } from './deploy.js';
 import { HypTokenRouterConfig, HypTokenRouterConfigSchema } from './types.js';
 
 type WarpRouteAddresses = HyperlaneAddresses<ProxyFactoryFactories> & {
@@ -573,7 +573,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       proxyFactoryFactories,
     } = params;
     const chainName = multiProvider.getChainName(chain);
-    const deployer = new HypERC20Deployer(multiProvider);
+    const deployer = new HypTokenDeployer(multiProvider);
     const deployedContracts = await deployer.deployContracts(chainName, config);
 
     const warpModule = new EvmERC20WarpModule(

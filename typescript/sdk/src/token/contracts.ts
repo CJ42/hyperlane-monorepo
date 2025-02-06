@@ -23,13 +23,12 @@ import {
 
 import { TokenType } from './config.js';
 
-// ERC20 standard
-// --------------
+// ERC20 + LSP7 standards
+// ----------------------
 
-// LSP7 and LSP8 standards are just added to this list for simplicity,
-// as this constant is re-used to extract contracts and factories
-// TODO: rename this constant
-export const hypERC20contracts = {
+// LSP7 and LSP8 standards are just added to this list alongside ERC standards.
+// Both ERC and LSP are EVM standards.
+export const hypTokencontracts = {
   [TokenType.fastCollateral]: 'FastHypERC20Collateral',
   [TokenType.fastSynthetic]: 'FastHypERC20',
   [TokenType.synthetic]: 'HypERC20',
@@ -45,9 +44,9 @@ export const hypERC20contracts = {
   [TokenType.native]: 'HypNative',
   [TokenType.nativeScaled]: 'HypNativeScaled',
 };
-export type HypERC20contracts = typeof hypERC20contracts;
+export type HypTokenContracts = typeof hypTokencontracts;
 
-export const hypERC20factories = {
+export const hypTokenfactories = {
   [TokenType.fastCollateral]: new FastHypERC20Collateral__factory(),
   [TokenType.fastSynthetic]: new FastHypERC20__factory(),
   [TokenType.synthetic]: new HypERC20__factory(),
@@ -63,12 +62,12 @@ export const hypERC20factories = {
   [TokenType.native]: new HypNative__factory(),
   [TokenType.nativeScaled]: new HypNativeScaled__factory(),
 };
-export type HypERC20Factories = typeof hypERC20factories;
+export type HypTokenFactories = typeof hypTokenfactories;
 
-// ERC721 standard
-// ---------------
+// ERC721 + LSP8 standards
+// -----------------------
 
-export const hypERC721contracts = {
+export const hypNFTcontracts = {
   [TokenType.collateralUri]: 'HypERC721URICollateral',
   [TokenType.collateral]: 'HypERC721Collateral',
   [TokenType.collateralLSP8]: 'HypLSP8Collateral',
@@ -76,9 +75,9 @@ export const hypERC721contracts = {
   [TokenType.synthetic]: 'HypERC721',
   [TokenType.syntheticLSP8]: 'HypLSP8',
 };
-export type HypERC721contracts = typeof hypERC721contracts;
+export type HypNFTcontracts = typeof hypNFTcontracts;
 
-export const hypERC721factories = {
+export const hypNFTfactories = {
   [TokenType.collateralUri]: new HypERC721URICollateral__factory(),
   [TokenType.collateral]: new HypERC721Collateral__factory(),
   [TokenType.collateralLSP8]: new HypLSP8Collateral__factory(),
@@ -86,6 +85,6 @@ export const hypERC721factories = {
   [TokenType.synthetic]: new HypERC721__factory(),
   [TokenType.syntheticLSP8]: new HypLSP8__factory(),
 };
-export type HypERC721Factories = typeof hypERC721factories;
+export type HypNFTFactories = typeof hypNFTfactories;
 
-export type TokenFactories = HypERC20Factories | HypERC721Factories;
+export type TokenFactories = HypTokenFactories | HypNFTFactories;

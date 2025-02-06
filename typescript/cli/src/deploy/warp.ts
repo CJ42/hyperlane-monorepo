@@ -20,13 +20,10 @@ import {
   EvmIsmModule,
   ExplorerLicenseType,
   HookConfig,
-  HypERC20Deployer,
-  HypERC20Factories,
-  HypERC721Deployer,
-  HypERC721Factories, // HypLSP7Deployer,
-  // HypLSP7Factories,
-  // HypLSP8Deployer,
-  // HypLSP8Factories,
+  HypNFTDeployer,
+  HypNFTFactories,
+  HypTokenDeployer,
+  HypTokenFactories,
   HypTokenRouterConfig,
   HyperlaneContracts,
   HyperlaneContractsMap,
@@ -52,7 +49,7 @@ import {
   attachContractsMap,
   connectContractsMap,
   getTokenConnectionId,
-  hypERC20factories,
+  hypTokenfactories,
   isCollateralTokenConfig,
   isTokenMetadata,
 } from '@hyperlane-xyz/sdk';
@@ -184,7 +181,7 @@ async function executeDeploy(
   apiKeys: ChainMap<string>,
 ): Promise<
   HyperlaneContractsMap<
-    HypERC20Factories | HypERC721Factories // | HypLSP7Factories  | HypLSP8Factories
+    HypTokenFactories | HypNFTFactories // | HypLSP7Factories  | HypLSP8Factories
   >
 > {
   logBlue('🚀 All systems ready, captain! Beginning deployment...');
@@ -195,33 +192,8 @@ async function executeDeploy(
   } = params;
 
   const deployer = warpDeployConfig.isNft
-    ? new HypERC721Deployer(multiProvider)
-    : new HypERC20Deployer(multiProvider); // TODO: replace with EvmERC20WarpModule
-
-  // let deployer;
-
-  // logGray('About to select token deployer based on configs');
-  // logGray(JSON.stringify(warpDeployConfig, null, 2));
-
-  // const test = warpDeployConfig.type;
-  // logGray(test);
-  // logGray(typeof test);
-
-  // // TODO: improve Typescript typing here
-  // if (
-  //   (warpDeployConfig as any).type === TokenType.collateralLSP7 ||
-  //   (warpDeployConfig as any).type === TokenType.syntheticLSP7
-  // ) {
-  //   logGray('Deployment for LSP7/8 is running. If statement reached');
-  //   deployer = warpDeployConfig.isNft
-  //     ? new HypLSP8Deployer(multiProvider)
-  //     : new HypLSP7Deployer(multiProvider);
-  // } else {
-  //   logGray('Deployment for ERC20/721 is running. Else statement reached');
-  //   deployer = warpDeployConfig.isNft
-  //     ? new HypERC721Deployer(multiProvider)
-  //     : new HypERC20Deployer(multiProvider); // TODO: replace with EvmERC20WarpModule
-  // }
+    ? new HypNFTDeployer(multiProvider)
+    : new HypTokenDeployer(multiProvider); // TODO: replace with EvmERC20WarpModule
 
   const config: WarpRouteDeployConfig =
     isDryRun && dryRunChain
@@ -453,7 +425,7 @@ async function getWarpCoreConfig(
   const warpCoreConfig: WarpCoreConfig = { tokens: [] };
 
   // TODO: replace with warp read
-  const tokenMetadata = await HypERC20Deployer.deriveTokenMetadata(
+  const tokenMetadata = await HypTokenDeployer.deriveTokenMetadata(
     context.multiProvider,
     warpDeployConfig,
   );
@@ -501,7 +473,7 @@ function generateTokenConfigs(
       decimals,
       symbol,
       name,
-      addressOrDenom: contract[config.type as keyof TokenFactories]['address'], // TODO, should be `.member` but type error
+      addressOrDenom: contract[config.type as keyof TokenFactories].address,
       collateralAddressOrDenom,
     });
   }
@@ -716,7 +688,7 @@ async function deriveMetadataFromExisting(
   existingConfigs: WarpRouteDeployConfig,
   extendedConfigs: WarpRouteDeployConfig,
 ): Promise<WarpRouteDeployConfig> {
-  const existingTokenMetadata = await HypERC20Deployer.deriveTokenMetadata(
+  const existingTokenMetadata = await HypTokenDeployer.deriveTokenMetadata(
     multiProvider,
     existingConfigs,
   );
@@ -735,7 +707,7 @@ function mergeAllRouters(
   multiProvider: MultiProvider,
   existingConfigs: WarpRouteDeployConfig,
   deployedContractsMap: HyperlaneContractsMap<
-    HypERC20Factories | HypERC721Factories // | HypLSP7Factories   | HypLSP8Factories
+    HypTokenFactories | HypNFTFactories // | HypLSP7Factories   | HypLSP8Factories
   >,
   warpCoreConfigByChain: ChainMap<WarpCoreConfig['tokens'][number]>,
 ) {
@@ -747,11 +719,11 @@ function mergeAllRouters(
   );
   return {
     ...connectContractsMap(
-      attachContractsMap(existingContractAddresses, hypERC20factories),
+      attachContractsMap(existingContractAddresses, hypTokenfactories),
       multiProvider,
     ),
     ...deployedContractsMap,
-  } as HyperlaneContractsMap<HypERC20Factories>;
+  } as HyperlaneContractsMap<HypTokenFactories>;
 }
 
 /**
@@ -762,7 +734,7 @@ function mergeAllRouters(
  */
 async function enrollRemoteRouters(
   params: WarpApplyParams,
-  deployedContractsMap: HyperlaneContractsMap<HypERC20Factories>,
+  deployedContractsMap: HyperlaneContractsMap<HypTokenFactories>,
 ): Promise<AnnotatedEV5Transaction[]> {
   logBlue(`Enrolling deployed routers with each other...`);
   const { multiProvider, registry } = params.context;
@@ -857,7 +829,7 @@ async function enrollRemoteRouters(
 async function populateDestinationGas(
   multiProvider: MultiProvider,
   warpDeployConfig: WarpRouteDeployConfig,
-  deployedContractsMap: HyperlaneContractsMap<HypERC20Factories>,
+  deployedContractsMap: HyperlaneContractsMap<HypTokenFactories>,
 ): Promise<DestinationGas> {
   const destinationGas: DestinationGas = {};
   const deployedChains = Object.keys(deployedContractsMap);
@@ -883,8 +855,8 @@ async function populateDestinationGas(
   return destinationGas;
 }
 
-function getRouter(contracts: HyperlaneContracts<HypERC20Factories>) {
-  for (const key of objKeys(hypERC20factories)) {
+function getRouter(contracts: HyperlaneContracts<HypTokenFactories>) {
+  for (const key of objKeys(hypTokenfactories)) {
     if (contracts[key]) return contracts[key];
   }
   throw new Error('No matching contract found.');

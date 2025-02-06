@@ -40,6 +40,7 @@ export const CollateralTokenConfigSchema = TokenMetadataSchema.partial().extend(
       TokenType.collateralFiat,
       TokenType.fastCollateral,
       TokenType.collateralUri,
+      TokenType.collateralLSP8,
     ]),
     token: z
       .string()
@@ -66,6 +67,7 @@ export const SyntheticTokenConfigSchema = TokenMetadataSchema.partial().extend({
   type: z.enum([
     TokenType.synthetic,
     TokenType.syntheticLSP7,
+    TokenType.syntheticLSP8,
     TokenType.syntheticUri,
     TokenType.fastSynthetic,
   ]),

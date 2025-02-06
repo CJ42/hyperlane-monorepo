@@ -8,7 +8,7 @@ import {
   ChainMap,
   ContractVerifier,
   ExplorerLicenseType,
-  HypERC20Deployer,
+  HypTokenDeployer,
   HyperlaneCoreDeployer,
   HyperlaneDeployer,
   HyperlaneHookDeployer,
@@ -138,7 +138,7 @@ async function main() {
       multiProvider,
     );
     config = await getWarpConfig(multiProvider, envConfig, warpRouteId);
-    deployer = new HypERC20Deployer(
+    deployer = new HypTokenDeployer(
       multiProvider,
       ismFactory,
       contractVerifier,

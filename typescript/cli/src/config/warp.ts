@@ -59,8 +59,10 @@ const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
   // TODO: describe
   [TokenType.fastSynthetic]: '',
   [TokenType.syntheticUri]: '',
+  [TokenType.syntheticLSP8]: '',
   [TokenType.fastCollateral]: '',
   [TokenType.collateralUri]: '',
+  [TokenType.collateralLSP8]: '',
   [TokenType.nativeScaled]: '',
 };
 
@@ -191,7 +193,10 @@ export async function createWarpRouteDeployConfig({
 
     // TODO: restore NFT prompting
     const isNft =
-      type === TokenType.syntheticUri || type === TokenType.collateralUri;
+      type === TokenType.syntheticUri ||
+      type === TokenType.collateralUri ||
+      type === TokenType.syntheticLSP8 ||
+      type === TokenType.collateralLSP8;
 
     switch (type) {
       case TokenType.collateral:
@@ -200,6 +205,7 @@ export async function createWarpRouteDeployConfig({
       case TokenType.XERC20Lockbox:
       case TokenType.collateralFiat:
       case TokenType.collateralUri:
+      case TokenType.collateralLSP8:
       case TokenType.fastCollateral:
         result[chain] = {
           mailbox,

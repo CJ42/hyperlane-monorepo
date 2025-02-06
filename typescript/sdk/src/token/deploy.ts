@@ -20,13 +20,13 @@ import { ChainName } from '../types.js';
 
 import { TokenType, gasOverhead } from './config.js';
 import {
-  HypERC20Factories,
-  HypERC721Factories,
+  HypNFTFactories,
+  HypTokenFactories,
   TokenFactories,
-  hypERC20contracts,
-  hypERC20factories,
-  hypERC721contracts,
-  hypERC721factories,
+  hypNFTcontracts,
+  hypNFTfactories,
+  hypTokencontracts,
+  hypTokenfactories,
 } from './contracts.js';
 import {
   HypTokenRouterConfig,
@@ -220,7 +220,7 @@ abstract class TokenDeployer<
   }
 }
 
-export class HypERC20Deployer extends TokenDeployer<HypERC20Factories> {
+export class HypTokenDeployer extends TokenDeployer<HypTokenFactories> {
   constructor(
     multiProvider: MultiProvider,
     ismFactory?: HyperlaneIsmFactory,
@@ -229,16 +229,16 @@ export class HypERC20Deployer extends TokenDeployer<HypERC20Factories> {
   ) {
     super(
       multiProvider,
-      hypERC20factories,
-      'HypERC20Deployer',
+      hypTokenfactories,
+      'HypTokenDeployer',
       ismFactory,
       contractVerifier,
       concurrentDeploy,
     );
   }
 
-  router(contracts: HyperlaneContracts<HypERC20Factories>): GasRouter {
-    for (const key of objKeys(hypERC20factories)) {
+  router(contracts: HyperlaneContracts<HypTokenFactories>): GasRouter {
+    for (const key of objKeys(hypTokenfactories)) {
       if (contracts[key]) {
         return contracts[key];
       }
@@ -246,17 +246,17 @@ export class HypERC20Deployer extends TokenDeployer<HypERC20Factories> {
     throw new Error('No matching contract found');
   }
 
-  routerContractKey(config: HypTokenRouterConfig): keyof HypERC20Factories {
-    assert(config.type in hypERC20factories, 'Invalid ERC20 token type');
-    return config.type as keyof HypERC20Factories;
+  routerContractKey(config: HypTokenRouterConfig): keyof HypTokenFactories {
+    assert(config.type in hypTokenfactories, 'Invalid ERC20 token type');
+    return config.type as keyof HypTokenFactories;
   }
 
   routerContractName(config: HypTokenRouterConfig): string {
-    return hypERC20contracts[this.routerContractKey(config)];
+    return hypTokencontracts[this.routerContractKey(config)];
   }
 }
 
-export class HypERC721Deployer extends TokenDeployer<HypERC721Factories> {
+export class HypNFTDeployer extends TokenDeployer<HypNFTFactories> {
   constructor(
     multiProvider: MultiProvider,
     ismFactory?: HyperlaneIsmFactory,
@@ -264,15 +264,15 @@ export class HypERC721Deployer extends TokenDeployer<HypERC721Factories> {
   ) {
     super(
       multiProvider,
-      hypERC721factories,
-      'HypERC721Deployer',
+      hypNFTfactories,
+      'HypNFTDeployer',
       ismFactory,
       contractVerifier,
     );
   }
 
-  router(contracts: HyperlaneContracts<HypERC721Factories>): GasRouter {
-    for (const key of objKeys(hypERC721factories)) {
+  router(contracts: HyperlaneContracts<HypNFTFactories>): GasRouter {
+    for (const key of objKeys(hypNFTfactories)) {
       if (contracts[key]) {
         return contracts[key];
       }
@@ -280,12 +280,12 @@ export class HypERC721Deployer extends TokenDeployer<HypERC721Factories> {
     throw new Error('No matching contract found');
   }
 
-  routerContractKey(config: HypTokenRouterConfig): keyof HypERC721Factories {
-    assert(config.type in hypERC721factories, 'Invalid ERC721 token type');
-    return config.type as keyof HypERC721Factories;
+  routerContractKey(config: HypTokenRouterConfig): keyof HypNFTFactories {
+    assert(config.type in hypNFTfactories, 'Invalid ERC721 token type');
+    return config.type as keyof HypNFTFactories;
   }
 
   routerContractName(config: HypTokenRouterConfig): string {
-    return hypERC721contracts[this.routerContractKey(config)];
+    return hypNFTcontracts[this.routerContractKey(config)];
   }
 }
