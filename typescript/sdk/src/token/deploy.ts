@@ -1,9 +1,11 @@
-import { constants } from 'ethers';
+import { LSP4DataKeys } from '@lukso/lsp4-contracts';
+import { constants, ethers } from 'ethers';
 
 import {
   ERC20__factory,
   ERC721Enumerable__factory,
   GasRouter,
+  HypLSP7__factory,
   IERC4626__factory,
   IXERC20Lockbox__factory,
 } from '@hyperlane-xyz/core';
@@ -20,17 +22,11 @@ import { TokenType, gasOverhead } from './config.js';
 import {
   HypERC20Factories,
   HypERC721Factories,
-  HypLSP7Factories,
-  HypLSP8Factories,
   TokenFactories,
   hypERC20contracts,
   hypERC20factories,
   hypERC721contracts,
   hypERC721factories,
-  hypLSP7contracts,
-  hypLSP7factories,
-  hypLSP8contracts,
-  hypLSP8factories,
 } from './contracts.js';
 import {
   HypTokenRouterConfig,
@@ -84,7 +80,7 @@ abstract class TokenDeployer<
     }
   }
 
-  // TODO: add parameter for LSP4Metadata
+  // TODO: add parameter for LSP4Metadata in HypLSP7/8
   async initializeArgs(
     chain: ChainName,
     config: HypTokenRouterConfig,
@@ -168,12 +164,28 @@ abstract class TokenDeployer<
             break;
         }
 
-        const erc20 = ERC20__factory.connect(token, provider);
-        const [name, symbol, decimals] = await Promise.all([
-          erc20.name(),
-          erc20.symbol(),
-          erc20.decimals(),
-        ]);
+        let name, symbol, decimals;
+
+        if (config.type === TokenType.collateralLSP7) {
+          const lsp7 = HypLSP7__factory.connect(token, provider);
+
+          decimals = await lsp7.decimals();
+
+          const [encodedName, encodedSymbol] = await lsp7.getDataBatch([
+            LSP4DataKeys.LSP4TokenName,
+            LSP4DataKeys.LSP4TokenSymbol,
+          ]);
+
+          name = ethers.utils.toUtf8String(encodedName);
+          symbol = ethers.utils.toUtf8String(encodedSymbol);
+        } else {
+          const erc20 = ERC20__factory.connect(token, provider);
+          [name, symbol, decimals] = await Promise.all([
+            erc20.name(),
+            erc20.symbol(),
+            erc20.decimals(),
+          ]);
+        }
 
         return TokenMetadataSchema.parse({
           name,
@@ -275,75 +287,5 @@ export class HypERC721Deployer extends TokenDeployer<HypERC721Factories> {
 
   routerContractName(config: HypTokenRouterConfig): string {
     return hypERC721contracts[this.routerContractKey(config)];
-  }
-}
-
-export class HypLSP7Deployer extends TokenDeployer<HypLSP7Factories> {
-  constructor(
-    multiProvider: MultiProvider,
-    ismFactory?: HyperlaneIsmFactory,
-    contractVerifier?: ContractVerifier,
-    concurrentDeploy = false,
-  ) {
-    super(
-      multiProvider,
-      hypLSP7factories,
-      'HypLSP7Deployer',
-      ismFactory,
-      contractVerifier,
-      concurrentDeploy,
-    );
-  }
-
-  router(contracts: HyperlaneContracts<HypLSP7Factories>): GasRouter {
-    for (const key of objKeys(hypLSP7factories)) {
-      if (contracts[key]) {
-        return contracts[key];
-      }
-    }
-    throw new Error('No matching contract found');
-  }
-
-  routerContractKey(config: HypTokenRouterConfig): keyof HypLSP7Factories {
-    assert(config.type in hypLSP7factories, 'Invalid HypLSP7 token type');
-    return config.type as keyof HypLSP7Factories;
-  }
-
-  routerContractName(config: HypTokenRouterConfig): string {
-    return hypLSP7contracts[this.routerContractKey(config)];
-  }
-}
-
-export class HypLSP8Deployer extends TokenDeployer<HypLSP8Factories> {
-  constructor(
-    multiProvider: MultiProvider,
-    ismFactory?: HyperlaneIsmFactory,
-    contractVerifier?: ContractVerifier,
-  ) {
-    super(
-      multiProvider,
-      hypLSP8factories,
-      'HypLSP8Deployer',
-      ismFactory,
-      contractVerifier,
-    );
-  }
-
-  router(contracts: HyperlaneContracts<HypLSP8Factories>): GasRouter {
-    for (const key of objKeys(hypLSP8factories)) {
-      if (contracts[key]) {
-        return contracts[key];
-      }
-    }
-    throw new Error('No matching contract found');
-  }
-
-  routerContractKey(config: HypTokenRouterConfig): keyof HypLSP8Factories {
-    assert(config.type in hypLSP8factories, 'Invalid LSP8 token type');
-    return config.type as keyof HypLSP8Factories;
-  }
-
-  routerContractName(config: HypTokenRouterConfig): string {
-    return hypLSP8contracts[this.routerContractKey(config)];
   }
 }

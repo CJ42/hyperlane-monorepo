@@ -1,11 +1,13 @@
 export enum TokenType {
   synthetic = 'synthetic',
   syntheticLSP7 = 'syntheticLSP7',
+  syntheticLSP8 = 'syntheticLSP8',
   syntheticRebase = 'syntheticRebase',
   fastSynthetic = 'fastSynthetic',
   syntheticUri = 'syntheticUri',
   collateral = 'collateral',
   collateralLSP7 = 'collateralLSP7',
+  collateralLSP8 = 'collateralLSP8',
   collateralVault = 'collateralVault',
   collateralVaultRebase = 'collateralVaultRebase',
   XERC20 = 'xERC20',

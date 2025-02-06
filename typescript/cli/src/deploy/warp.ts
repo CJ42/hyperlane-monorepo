@@ -23,11 +23,10 @@ import {
   HypERC20Deployer,
   HypERC20Factories,
   HypERC721Deployer,
-  HypERC721Factories,
-  HypLSP7Deployer,
-  HypLSP7Factories,
-  HypLSP8Deployer,
-  HypLSP8Factories,
+  HypERC721Factories, // HypLSP7Deployer,
+  // HypLSP7Factories,
+  // HypLSP8Deployer,
+  // HypLSP8Factories,
   HypTokenRouterConfig,
   HyperlaneContracts,
   HyperlaneContractsMap,
@@ -42,8 +41,7 @@ import {
   RoutingIsmConfig,
   SubmissionStrategy,
   TOKEN_TYPE_TO_STANDARD,
-  TokenFactories,
-  TokenType,
+  TokenFactories, // TokenType,
   TrustedRelayerIsmConfig,
   TxSubmitterBuilder,
   TxSubmitterType,
@@ -186,7 +184,7 @@ async function executeDeploy(
   apiKeys: ChainMap<string>,
 ): Promise<
   HyperlaneContractsMap<
-    HypERC20Factories | HypLSP7Factories | HypERC721Factories | HypLSP8Factories
+    HypERC20Factories | HypERC721Factories // | HypLSP7Factories  | HypLSP8Factories
   >
 > {
   logBlue('🚀 All systems ready, captain! Beginning deployment...');
@@ -196,21 +194,34 @@ async function executeDeploy(
     context: { multiProvider, isDryRun, dryRunChain },
   } = params;
 
-  let deployer;
+  const deployer = warpDeployConfig.isNft
+    ? new HypERC721Deployer(multiProvider)
+    : new HypERC20Deployer(multiProvider); // TODO: replace with EvmERC20WarpModule
 
-  // TODO: improve Typescript typing here
-  if (
-    (warpDeployConfig as any).type === TokenType.collateralLSP7 ||
-    (warpDeployConfig as any).type === TokenType.syntheticLSP7
-  ) {
-    deployer = warpDeployConfig.isNft
-      ? new HypLSP8Deployer(multiProvider)
-      : new HypLSP7Deployer(multiProvider);
-  } else {
-    deployer = warpDeployConfig.isNft
-      ? new HypERC721Deployer(multiProvider)
-      : new HypERC20Deployer(multiProvider); // TODO: replace with EvmERC20WarpModule
-  }
+  // let deployer;
+
+  // logGray('About to select token deployer based on configs');
+  // logGray(JSON.stringify(warpDeployConfig, null, 2));
+
+  // const test = warpDeployConfig.type;
+  // logGray(test);
+  // logGray(typeof test);
+
+  // // TODO: improve Typescript typing here
+  // if (
+  //   (warpDeployConfig as any).type === TokenType.collateralLSP7 ||
+  //   (warpDeployConfig as any).type === TokenType.syntheticLSP7
+  // ) {
+  //   logGray('Deployment for LSP7/8 is running. If statement reached');
+  //   deployer = warpDeployConfig.isNft
+  //     ? new HypLSP8Deployer(multiProvider)
+  //     : new HypLSP7Deployer(multiProvider);
+  // } else {
+  //   logGray('Deployment for ERC20/721 is running. Else statement reached');
+  //   deployer = warpDeployConfig.isNft
+  //     ? new HypERC721Deployer(multiProvider)
+  //     : new HypERC20Deployer(multiProvider); // TODO: replace with EvmERC20WarpModule
+  // }
 
   const config: WarpRouteDeployConfig =
     isDryRun && dryRunChain
@@ -724,7 +735,7 @@ function mergeAllRouters(
   multiProvider: MultiProvider,
   existingConfigs: WarpRouteDeployConfig,
   deployedContractsMap: HyperlaneContractsMap<
-    HypERC20Factories | HypLSP7Factories | HypERC721Factories | HypLSP8Factories
+    HypERC20Factories | HypERC721Factories // | HypLSP7Factories   | HypLSP8Factories
   >,
   warpCoreConfigByChain: ChainMap<WarpCoreConfig['tokens'][number]>,
 ) {
