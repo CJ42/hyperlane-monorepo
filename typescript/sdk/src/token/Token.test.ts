@@ -32,6 +32,8 @@ const STANDARD_TO_TOKEN: Record<TokenStandard, TokenArgs | null> = {
   [TokenStandard.LSP7]: null,
   [TokenStandard.ERC721]: null,
   [TokenStandard.LSP8]: null,
+  [TokenStandard.EvmHypLSP7Collateral]: null,
+  [TokenStandard.EvmHypLSP7Synthetic]: null,
   [TokenStandard.EvmNative]: Token.FromChainMetadataNativeToken(test1),
   [TokenStandard.EvmHypNative]: {
     chainName: TestChainName.test2,
