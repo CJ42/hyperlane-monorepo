@@ -7621,7 +7621,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperlane-xyz/sdk@npm:8.6.1, @hyperlane-xyz/sdk@workspace:typescript/sdk":
+"@hyperlane-xyz/sdk@npm:8.6.1":
+  version: 8.6.1
+  resolution: "@hyperlane-xyz/sdk@npm:8.6.1"
+  dependencies:
+    "@arbitrum/sdk": "npm:^4.0.0"
+    "@aws-sdk/client-s3": "npm:^3.577.0"
+    "@chain-registry/types": "npm:^0.50.14"
+    "@cosmjs/cosmwasm-stargate": "npm:^0.32.4"
+    "@cosmjs/stargate": "npm:^0.32.4"
+    "@hyperlane-xyz/core": "npm:5.11.3"
+    "@hyperlane-xyz/utils": "npm:8.6.1"
+    "@safe-global/api-kit": "npm:1.3.0"
+    "@safe-global/protocol-kit": "npm:1.3.0"
+    "@safe-global/safe-deployments": "npm:1.37.23"
+    "@solana/spl-token": "npm:^0.4.9"
+    "@solana/web3.js": "npm:^1.95.4"
+    bignumber.js: "npm:^9.1.1"
+    cosmjs-types: "npm:^0.9.0"
+    cross-fetch: "npm:^3.1.5"
+    ethers: "npm:^5.7.2"
+    pino: "npm:^8.19.0"
+    viem: "npm:^2.21.45"
+    zod: "npm:^3.21.2"
+  peerDependencies:
+    "@ethersproject/abi": "*"
+    "@ethersproject/providers": "*"
+  checksum: 10/a1332465b6eb559ef204d1b67e690b3f5ec6c35ee96f04788b69aacdabd36d73f71bd6c91aa3da0d14c1dc6e9c7f7d86aac9c84713d306f171eaf0e87d451c66
+  languageName: node
+  linkType: hard
+
+"@hyperlane-xyz/sdk@workspace:typescript/sdk":
   version: 0.0.0-use.local
   resolution: "@hyperlane-xyz/sdk@workspace:typescript/sdk"
   dependencies:
@@ -7633,6 +7663,7 @@ __metadata:
     "@eslint/js": "npm:^9.15.0"
     "@hyperlane-xyz/core": "npm:5.11.3"
     "@hyperlane-xyz/utils": "npm:8.6.1"
+    "@lukso/lsp4-contracts": "npm:^0.16.2"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.3"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.6"
     "@safe-global/api-kit": "npm:1.3.0"
@@ -8843,7 +8874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lukso/lsp4-contracts@npm:~0.16.0, @lukso/lsp4-contracts@npm:~0.16.2":
+"@lukso/lsp4-contracts@npm:^0.16.2, @lukso/lsp4-contracts@npm:~0.16.0, @lukso/lsp4-contracts@npm:~0.16.2":
   version: 0.16.2
   resolution: "@lukso/lsp4-contracts@npm:0.16.2"
   dependencies:
