@@ -41,6 +41,8 @@ import {
 import {
   EvmHypCollateralAdapter,
   EvmHypCollateralFiatAdapter,
+  EvmHypLSP7CollateralAdapter,
+  EvmHypLSP7SyntheticAdapter,
   EvmHypNativeAdapter,
   EvmHypSyntheticAdapter,
   EvmHypXERC20Adapter,
@@ -201,6 +203,14 @@ export class Token implements IToken {
       standard === TokenStandard.EvmHypRebaseCollateral
     ) {
       return new EvmHypCollateralAdapter(chainName, multiProvider, {
+        token: addressOrDenom,
+      });
+    } else if (standard === TokenStandard.EvmHypLSP7Collateral) {
+      return new EvmHypLSP7CollateralAdapter(chainName, multiProvider, {
+        token: addressOrDenom,
+      });
+    } else if (standard === TokenStandard.EvmHypLSP7Synthetic) {
+      return new EvmHypLSP7SyntheticAdapter(chainName, multiProvider, {
         token: addressOrDenom,
       });
     } else if (standard === TokenStandard.EvmHypCollateralFiat) {
