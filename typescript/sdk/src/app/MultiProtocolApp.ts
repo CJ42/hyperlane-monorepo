@@ -80,7 +80,7 @@ export class BaseSealevelAdapter extends BaseAppAdapter {
     programId: string | PublicKey,
   ): PublicKey {
     const [pda] = PublicKey.findProgramAddressSync(
-      seeds.map((s) => Buffer.from(s)),
+      seeds.map((s) => (typeof s === 'string' ? Buffer.from(s) : s)),
       new PublicKey(programId),
     );
     return pda;

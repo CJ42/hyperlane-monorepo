@@ -1,7 +1,7 @@
 {
   "name": "@hyperlane-xyz/infra",
   "description": "Infrastructure utilities for the Hyperlane Network",
-  "version": "8.6.1",
+  "version": "8.6.1-lukso-dev0",
   "dependencies": {
     "@arbitrum/sdk": "^4.0.0",
     "@aws-sdk/client-iam": "^3.74.0",
@@ -16,7 +16,7 @@
     "@hyperlane-xyz/cli": "8.6.1",
     "@hyperlane-xyz/helloworld": "8.6.1",
     "@hyperlane-xyz/registry": "9.5.0",
-    "@hyperlane-xyz/sdk": "8.6.1",
+    "@hyperlane-xyz/sdk": "workspace:*",
     "@hyperlane-xyz/utils": "8.6.1",
     "@inquirer/prompts": "3.3.2",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
