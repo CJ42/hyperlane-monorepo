@@ -166,7 +166,7 @@ export class EvmTokenAdapter<T extends ERC20 = ERC20>
   }
 }
 
-// Interacts with ERC20/721 contracts
+// Interacts with LSP7 contracts
 export class EvmLSP7TokenAdapter<
     T extends LSP7DigitalAssetInitAbstract = LSP7DigitalAssetInitAbstract,
   >
@@ -467,8 +467,6 @@ export class EvmHypCollateralAdapter
   }
 }
 
-// TODO: create EvmHypLSP7CollateralAdapter that inherits EvmHypCollateralAdapter
-// + override the functions (DO FIRST)
 export class EvmHypLSP7CollateralAdapter
   extends EvmHypLSP7SyntheticAdapter
   implements IHypTokenAdapter<PopulatedTransaction>
@@ -495,8 +493,8 @@ export class EvmHypLSP7CollateralAdapter
     return this.wrappedTokenAddress!;
   }
 
-  protected async getWrappedTokenAdapter(): Promise<EvmTokenAdapter> {
-    return new EvmTokenAdapter(this.chainName, this.multiProvider, {
+  protected async getWrappedTokenAdapter(): Promise<EvmLSP7TokenAdapter> {
+    return new EvmLSP7TokenAdapter(this.chainName, this.multiProvider, {
       token: await this.getWrappedTokenAddress(),
     });
   }

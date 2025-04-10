@@ -1,6 +1,9 @@
 import { MerkleTreeHook, ValidatorAnnounce } from '@hyperlane-xyz/core';
-import { getValidatorFromStorageLocation } from '@hyperlane-xyz/sdk';
-import { BaseValidator } from '@hyperlane-xyz/utils';
+import {
+  GcpValidator,
+  S3Validator,
+  getValidatorFromStorageLocation,
+} from '@hyperlane-xyz/sdk';
 
 import { logDebug } from '../logger.js';
 
@@ -39,7 +42,7 @@ export const getValidatorStorageLocations = async (
 export const getLatestValidatorCheckpointIndexAndUrl = async (
   storageLocation: string,
 ): Promise<[number, string] | undefined> => {
-  let validator: BaseValidator;
+  let validator: S3Validator | GcpValidator;
   try {
     validator = await getValidatorFromStorageLocation(storageLocation);
   } catch (err) {

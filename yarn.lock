@@ -5576,13 +5576,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperlane-xyz/core@npm:5.11.3, @hyperlane-xyz/core@workspace:solidity":
+"@hyperlane-xyz/core@workspace:*, @hyperlane-xyz/core@workspace:solidity":
   version: 0.0.0-use.local
   resolution: "@hyperlane-xyz/core@workspace:solidity"
   dependencies:
     "@arbitrum/nitro-contracts": "npm:^1.2.1"
     "@eth-optimism/contracts": "npm:^0.6.0"
-    "@hyperlane-xyz/utils": "npm:8.6.1"
+    "@hyperlane-xyz/utils": "workspace:*"
     "@layerzerolabs/lz-evm-oapp-v2": "npm:2.0.2"
     "@layerzerolabs/solidity-examples": "npm:^1.1.0"
     "@lukso/lsp7-contracts": "npm:0.16.3"
@@ -5641,9 +5641,9 @@ __metadata:
   resolution: "@hyperlane-xyz/helloworld@workspace:typescript/helloworld"
   dependencies:
     "@eslint/js": "npm:^9.15.0"
-    "@hyperlane-xyz/core": "npm:5.11.3"
+    "@hyperlane-xyz/core": "workspace:*"
     "@hyperlane-xyz/registry": "npm:9.5.0"
-    "@hyperlane-xyz/sdk": "npm:8.6.1"
+    "@hyperlane-xyz/sdk": "workspace:*"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.3"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.6"
     "@openzeppelin/contracts-upgradeable": "npm:^4.9.3"
@@ -5695,7 +5695,7 @@ __metadata:
     "@hyperlane-xyz/cli": "npm:8.6.1"
     "@hyperlane-xyz/helloworld": "npm:8.6.1"
     "@hyperlane-xyz/registry": "npm:9.5.0"
-    "@hyperlane-xyz/sdk": "npm:8.6.1"
+    "@hyperlane-xyz/sdk": "workspace:*"
     "@hyperlane-xyz/utils": "npm:8.6.1"
     "@inquirer/prompts": "npm:3.3.2"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.3"
@@ -5767,36 +5767,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperlane-xyz/sdk@npm:8.6.1":
-  version: 8.6.1
-  resolution: "@hyperlane-xyz/sdk@npm:8.6.1"
-  dependencies:
-    "@arbitrum/sdk": "npm:^4.0.0"
-    "@aws-sdk/client-s3": "npm:^3.577.0"
-    "@chain-registry/types": "npm:^0.50.14"
-    "@cosmjs/cosmwasm-stargate": "npm:^0.32.4"
-    "@cosmjs/stargate": "npm:^0.32.4"
-    "@hyperlane-xyz/core": "npm:5.11.3"
-    "@hyperlane-xyz/utils": "npm:8.6.1"
-    "@safe-global/api-kit": "npm:1.3.0"
-    "@safe-global/protocol-kit": "npm:1.3.0"
-    "@safe-global/safe-deployments": "npm:1.37.23"
-    "@solana/spl-token": "npm:^0.4.9"
-    "@solana/web3.js": "npm:^1.95.4"
-    bignumber.js: "npm:^9.1.1"
-    cosmjs-types: "npm:^0.9.0"
-    cross-fetch: "npm:^3.1.5"
-    ethers: "npm:^5.7.2"
-    pino: "npm:^8.19.0"
-    viem: "npm:^2.21.45"
-    zod: "npm:^3.21.2"
-  peerDependencies:
-    "@ethersproject/abi": "*"
-    "@ethersproject/providers": "*"
-  checksum: 10/a1332465b6eb559ef204d1b67e690b3f5ec6c35ee96f04788b69aacdabd36d73f71bd6c91aa3da0d14c1dc6e9c7f7d86aac9c84713d306f171eaf0e87d451c66
-  languageName: node
-  linkType: hard
-
 "@hyperlane-xyz/sdk@workspace:*, @hyperlane-xyz/sdk@workspace:typescript/sdk":
   version: 0.0.0-use.local
   resolution: "@hyperlane-xyz/sdk@workspace:typescript/sdk"
@@ -5807,8 +5777,8 @@ __metadata:
     "@cosmjs/cosmwasm-stargate": "npm:^0.32.4"
     "@cosmjs/stargate": "npm:^0.32.4"
     "@eslint/js": "npm:^9.15.0"
-    "@hyperlane-xyz/core": "npm:5.11.3"
-    "@hyperlane-xyz/utils": "npm:8.6.1"
+    "@hyperlane-xyz/core": "workspace:*"
+    "@hyperlane-xyz/utils": "workspace:*"
     "@lukso/lsp4-contracts": "npm:^0.16.2"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.3"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.6"
@@ -5852,7 +5822,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperlane-xyz/utils@npm:8.6.1, @hyperlane-xyz/utils@workspace:typescript/utils":
+"@hyperlane-xyz/utils@npm:8.6.1":
+  version: 8.6.1
+  resolution: "@hyperlane-xyz/utils@npm:8.6.1"
+  dependencies:
+    "@cosmjs/encoding": "npm:^0.32.4"
+    "@solana/web3.js": "npm:^1.95.4"
+    bignumber.js: "npm:^9.1.1"
+    ethers: "npm:^5.7.2"
+    lodash-es: "npm:^4.17.21"
+    pino: "npm:^8.19.0"
+    yaml: "npm:2.4.5"
+  checksum: 10/d75150672ed4c5ebe07e40677179e2bb4b859fe0ff4ebb1eb2368f3231b5ecc5c9e77f4d7c99fc9cc58d2c244bb442cc6e0bdd3c17677187ba063904b55eb65b
+  languageName: node
+  linkType: hard
+
+"@hyperlane-xyz/utils@workspace:*, @hyperlane-xyz/utils@workspace:typescript/utils":
   version: 0.0.0-use.local
   resolution: "@hyperlane-xyz/utils@workspace:typescript/utils"
   dependencies:
@@ -5894,8 +5879,8 @@ __metadata:
     "@eslint/js": "npm:^9.15.0"
     "@headlessui/react": "npm:^2.1.8"
     "@hyperlane-xyz/registry": "npm:9.5.0"
-    "@hyperlane-xyz/sdk": "npm:8.6.1"
-    "@hyperlane-xyz/utils": "npm:8.6.1"
+    "@hyperlane-xyz/sdk": "workspace:*"
+    "@hyperlane-xyz/utils": "workspace:*"
     "@interchain-ui/react": "npm:^1.23.28"
     "@rainbow-me/rainbowkit": "npm:^2.2.0"
     "@solana/wallet-adapter-react": "npm:^0.15.32"
