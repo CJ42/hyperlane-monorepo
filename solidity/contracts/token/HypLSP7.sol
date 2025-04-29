@@ -5,6 +5,7 @@ pragma solidity >=0.8.19;
 import {LSP7DigitalAssetInitAbstract} from "@lukso/lsp7-contracts/contracts/LSP7DigitalAssetInitAbstract.sol";
 import {TokenRouter} from "./libs/TokenRouter.sol";
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {ERC725YInitAbstract} from "@erc725/smart-contracts-v8/contracts/ERC725YInitAbstract.sol";
 
 // constants
 import {_LSP4_TOKEN_TYPE_TOKEN} from "@lukso/lsp4-contracts/contracts/LSP4Constants.sol";
@@ -37,7 +38,9 @@ contract HypLSP7 is LSP7DigitalAssetInitAbstract, TokenRouter {
         string memory _symbol,
         address _hook,
         address _interchainSecurityModule,
-        address _owner
+        address _owner,
+        bytes32[] memory dataKeys,
+        bytes[] memory dataValues
     ) external initializer {
         // Initialize LSP7 metadata
         LSP7DigitalAssetInitAbstract._initialize({
@@ -56,6 +59,10 @@ contract HypLSP7 is LSP7DigitalAssetInitAbstract, TokenRouter {
             force: true,
             data: ""
         });
+
+        // set init data keys & values
+        if (dataKeys.length > 0 && dataKeys.length == dataValues.length)
+            ERC725YInitAbstract.setDataBatch(dataKeys, dataValues);
 
         // Initializes the Hyperlane router
         _MailboxClient_initialize(_hook, _interchainSecurityModule, _owner);

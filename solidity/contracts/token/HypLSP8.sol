@@ -3,6 +3,8 @@ pragma solidity >=0.8.19;
 
 import {TokenRouter} from "./libs/TokenRouter.sol";
 
+import {ERC725YInitAbstract} from "@erc725/smart-contracts-v8/contracts/ERC725YInitAbstract.sol";
+
 import {LSP8IdentifiableDigitalAssetInitAbstract} from "@lukso/lsp8-contracts/contracts/LSP8IdentifiableDigitalAssetInitAbstract.sol";
 
 import {_LSP4_TOKEN_TYPE_TOKEN} from "@lukso/lsp4-contracts/contracts/LSP4Constants.sol";
@@ -37,10 +39,14 @@ contract HypLSP8 is LSP8IdentifiableDigitalAssetInitAbstract, TokenRouter {
         address _interchainSecurityModule,
         address _owner,
         string memory _name,
-        string memory _symbol
+        string memory _symbol,
+        bytes32[] memory dataKeys,
+        bytes[] memory dataValues
     ) external initializer {
+        // Initializes the Hyperlane router
         _MailboxClient_initialize(_hook, _interchainSecurityModule, _owner);
 
+        // Initialize LSP8 metadata
         LSP8IdentifiableDigitalAssetInitAbstract._initialize(
             _name,
             _symbol,
@@ -49,9 +55,14 @@ contract HypLSP8 is LSP8IdentifiableDigitalAssetInitAbstract, TokenRouter {
             _LSP8_TOKENID_FORMAT_NUMBER
         );
 
+        // mints initial supply to deployer
         for (uint256 i = 0; i < _mintAmount; i++) {
             _mint(msg.sender, bytes32(i), true, "");
         }
+
+        // set init data keys & values
+        if (dataKeys.length > 0 && dataKeys.length == dataValues.length)
+            ERC725YInitAbstract.setDataBatch(dataKeys, dataValues);
     }
 
     function balanceOf(
