@@ -26,7 +26,7 @@ import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
 import { HypERC20App } from './app.js';
 import { HypERC20Checker } from './checker.js';
 import { TokenType } from './config.js';
-import { HypERC20Deployer } from './deploy.js';
+import { HypTokenDeployer } from './deploy.js';
 import {
   SyntheticTokenConfig,
   WarpRouteDeployConfigMailboxRequired,
@@ -52,7 +52,7 @@ function addOverridesToConfig(
 }
 describe('TokenDeployer', async () => {
   let signer: SignerWithAddress;
-  let deployer: HypERC20Deployer;
+  let deployer: HypTokenDeployer;
   let multiProvider: MultiProvider;
   let coreApp: TestCoreApp;
   let config: WarpRouteDeployConfigMailboxRequired;
@@ -107,7 +107,7 @@ describe('TokenDeployer', async () => {
       decimals!,
     );
 
-    deployer = new HypERC20Deployer(multiProvider);
+    deployer = new HypTokenDeployer(multiProvider);
   });
 
   it('deploys', async () => {

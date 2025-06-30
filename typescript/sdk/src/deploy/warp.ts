@@ -15,8 +15,8 @@ import { HookConfig } from '../hook/types.js';
 import { EvmIsmModule } from '../ism/EvmIsmModule.js';
 import { IsmConfig } from '../ism/types.js';
 import { MultiProvider } from '../providers/MultiProvider.js';
-import { HypERC20Factories, HypERC721Factories } from '../token/contracts.js';
-import { HypERC20Deployer, HypERC721Deployer } from '../token/deploy.js';
+import { HypNFTFactories, HypTokenFactories } from '../token/contracts.js';
+import { HypNFTDeployer, HypTokenDeployer } from '../token/deploy.js';
 import {
   HypTokenRouterConfig,
   WarpRouteDeployConfigMailboxRequired,
@@ -33,10 +33,10 @@ export async function executeWarpDeploy(
   warpDeployConfig: WarpRouteDeployConfigMailboxRequired,
   registryAddresses: ChainMap<ChainAddresses>,
   apiKeys: ChainMap<string>,
-): Promise<HyperlaneContractsMap<HypERC20Factories | HypERC721Factories>> {
+): Promise<HyperlaneContractsMap<HypTokenFactories | HypNFTFactories>> {
   const deployer = warpDeployConfig.isNft
-    ? new HypERC721Deployer(multiProvider)
-    : new HypERC20Deployer(multiProvider); // TODO: replace with EvmERC20WarpModule
+    ? new HypNFTDeployer(multiProvider)
+    : new HypTokenDeployer(multiProvider); // TODO: replace with EvmERC20WarpModule
 
   const contractVerifier = new ContractVerifier(
     multiProvider,

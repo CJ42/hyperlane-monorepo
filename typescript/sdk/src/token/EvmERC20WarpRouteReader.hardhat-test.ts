@@ -34,7 +34,7 @@ import { ChainMap } from '../types.js';
 
 import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
 import { TokenType } from './config.js';
-import { HypERC20Deployer } from './deploy.js';
+import { HypTokenDeployer } from './deploy.js';
 import { derivedIsmAddress } from './types.js';
 
 describe('ERC20WarpRouterReader', async () => {
@@ -48,7 +48,7 @@ describe('ERC20WarpRouterReader', async () => {
   let erc20Factory: ERC20Test__factory;
   let token: ERC20Test;
   let signer: SignerWithAddress;
-  let deployer: HypERC20Deployer;
+  let deployer: HypTokenDeployer;
   let multiProvider: MultiProvider;
   let coreApp: TestCoreApp;
   let routerConfigMap: ChainMap<RouterConfig>;
@@ -79,7 +79,7 @@ describe('ERC20WarpRouterReader', async () => {
     baseConfig = routerConfigMap[chain];
     mailbox = Mailbox__factory.connect(baseConfig.mailbox, signer);
     evmERC20WarpRouteReader = new EvmERC20WarpRouteReader(multiProvider, chain);
-    deployer = new HypERC20Deployer(multiProvider);
+    deployer = new HypTokenDeployer(multiProvider);
 
     const vaultFactory = new ERC4626Test__factory(signer);
     vault = await vaultFactory.deploy(token.address, TOKEN_NAME, TOKEN_NAME);
@@ -96,7 +96,7 @@ describe('ERC20WarpRouterReader', async () => {
   beforeEach(async () => {
     // Reset the MultiProvider and create a new deployer for each test
     multiProvider = MultiProvider.createTestMultiProvider({ signer });
-    deployer = new HypERC20Deployer(multiProvider);
+    deployer = new HypTokenDeployer(multiProvider);
   });
 
   it('should derive a token type from contract', async () => {

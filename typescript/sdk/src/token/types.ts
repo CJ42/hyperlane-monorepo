@@ -101,6 +101,8 @@ export const CollateralTokenConfigSchema = TokenMetadataSchema.partial().extend(
   {
     type: z.enum([
       TokenType.collateral,
+      TokenType.collateralLSP7,
+      TokenType.collateralLSP8,
       TokenType.collateralVault,
       TokenType.collateralVaultRebase,
       TokenType.collateralFiat,
@@ -179,7 +181,12 @@ export const isCollateralRebaseTokenConfig = isCompliant(
 );
 
 export const SyntheticTokenConfigSchema = TokenMetadataSchema.partial().extend({
-  type: z.enum([TokenType.synthetic, TokenType.syntheticUri]),
+  type: z.enum([
+    TokenType.synthetic,
+    TokenType.syntheticUri,
+    TokenType.syntheticLSP7,
+    TokenType.syntheticLSP8,
+  ]),
   initialSupply: z.string().or(z.number()).optional(),
 });
 export type SyntheticTokenConfig = z.infer<typeof SyntheticTokenConfigSchema>;
