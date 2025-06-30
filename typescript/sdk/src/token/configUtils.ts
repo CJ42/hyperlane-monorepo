@@ -28,7 +28,7 @@ import { WarpCoreConfig } from '../warp/types.js';
 import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
 import { TokenMetadataMap } from './TokenMetadataMap.js';
 import { gasOverhead } from './config.js';
-import { HypERC20Deployer } from './deploy.js';
+import { HypTokenDeployer } from './deploy.js';
 import {
   ContractVerificationStatus,
   DerivedWarpRouteDeployConfig,
@@ -122,7 +122,7 @@ export async function expandWarpDeployConfig(params: {
   } = params;
 
   const derivedTokenMetadata: TokenMetadataMap =
-    await HypERC20Deployer.deriveTokenMetadata(multiProvider, warpDeployConfig);
+    await HypTokenDeployer.deriveTokenMetadata(multiProvider, warpDeployConfig);
 
   // If the token is on an EVM chain check if it is deployed as a proxy
   // to expand the proxy config too

@@ -633,14 +633,14 @@ export {
   transformConfigToCheck,
 } from './token/configUtils.js';
 export {
-  hypERC20contracts,
-  HypERC20Factories,
-  hypERC20factories,
-  HypERC721Factories,
+  hypTokenContracts,
+  HypTokenFactories,
+  hypTokenFactories,
+  HypNFTFactories,
   TokenFactories,
 } from './token/contracts.js';
 export { CosmosNativeDeployer } from './token/cosmosnativeDeploy.js';
-export { HypERC20Deployer, HypERC721Deployer } from './token/deploy.js';
+export { HypTokenDeployer, HypNFTDeployer } from './token/deploy.js';
 export { EvmERC20WarpModule } from './token/EvmERC20WarpModule.js';
 export { EvmERC20WarpRouteReader } from './token/EvmERC20WarpRouteReader.js';
 export { IToken, TokenArgs, TokenConfigSchema } from './token/IToken.js';

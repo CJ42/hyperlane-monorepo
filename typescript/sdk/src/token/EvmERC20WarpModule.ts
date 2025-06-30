@@ -53,8 +53,8 @@ import { ChainName, ChainNameOrId } from '../types.js';
 import { extractIsmAndHookFactoryAddresses } from '../utils/ism.js';
 
 import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
-import { hypERC20contracts } from './contracts.js';
-import { HypERC20Deployer } from './deploy.js';
+import { hypTokenContracts } from './contracts.js';
+import { HypTokenDeployer } from './deploy.js';
 import {
   DerivedTokenRouterConfig,
   HypTokenRouterConfig,
@@ -808,7 +808,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       `Upgrading Warp Route implementation on ${this.args.chain} from ${actualConfig.contractVersion} to ${expectedConfig.contractVersion}`,
     );
 
-    const deployer = new HypERC20Deployer(this.multiProvider);
+    const deployer = new HypTokenDeployer(this.multiProvider);
     const constructorArgs = await deployer.constructorArgs(
       this.chainName,
       expectedConfig,
@@ -816,7 +816,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
     const implementation = await deployer.deployContractWithName(
       this.chainName,
       expectedConfig.type,
-      hypERC20contracts[expectedConfig.type],
+      hypTokenContracts[expectedConfig.type],
       constructorArgs,
       undefined,
       false,
@@ -869,7 +869,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       proxyFactoryFactories,
     } = params;
     const chainName = multiProvider.getChainName(chain);
-    const deployer = new HypERC20Deployer(multiProvider);
+    const deployer = new HypTokenDeployer(multiProvider);
     const deployedContracts = await deployer.deployContracts(chainName, config);
 
     const warpModule = new EvmERC20WarpModule(

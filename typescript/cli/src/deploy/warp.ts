@@ -18,9 +18,9 @@ import {
   EVM_TOKEN_TYPE_TO_STANDARD,
   EvmERC20WarpModule,
   ExplorerLicenseType,
-  HypERC20Deployer,
-  HypERC20Factories,
-  HypERC721Factories,
+  HypNFTFactories,
+  HypTokenDeployer,
+  HypTokenFactories,
   HyperlaneContractsMap,
   IsmType,
   MultiProvider,
@@ -46,7 +46,7 @@ import {
   getRouterAddressesFromWarpCoreConfig,
   getSubmitterBuilder,
   getTokenConnectionId,
-  hypERC20factories,
+  hypTokenFactories,
   isCollateralTokenConfig,
   isXERC20TokenConfig,
   splitWarpCoreAndExtendedConfigs,
@@ -206,7 +206,7 @@ async function runDeployPlanStep({ context, warpDeployConfig }: DeployParams) {
 async function executeDeploy(
   params: DeployParams,
   apiKeys: ChainMap<string>,
-): Promise<HyperlaneContractsMap<HypERC20Factories | HypERC721Factories>> {
+): Promise<HyperlaneContractsMap<HypTokenFactories | HypNFTFactories>> {
   logBlue('🚀 All systems ready, captain! Beginning deployment...');
 
   const {
@@ -254,7 +254,7 @@ async function getWarpCoreConfig(
 
   // TODO: replace with warp read
   const tokenMetadataMap: TokenMetadataMap =
-    await HypERC20Deployer.deriveTokenMetadata(
+    await HypTokenDeployer.deriveTokenMetadata(
       params.context.multiProvider,
       params.warpDeployConfig,
     );
@@ -650,7 +650,7 @@ async function deriveMetadataFromExisting(
   existingConfigs: WarpRouteDeployConfigMailboxRequired,
   extendedConfigs: WarpRouteDeployConfigMailboxRequired,
 ): Promise<WarpRouteDeployConfigMailboxRequired> {
-  const existingTokenMetadata = await HypERC20Deployer.deriveTokenMetadata(
+  const existingTokenMetadata = await HypTokenDeployer.deriveTokenMetadata(
     multiProvider,
     existingConfigs,
   );
@@ -670,7 +670,7 @@ function mergeAllRouters(
   multiProvider: MultiProvider,
   existingConfigs: WarpRouteDeployConfigMailboxRequired,
   deployedContractsMap: HyperlaneContractsMap<
-    HypERC20Factories | HypERC721Factories
+    HypTokenFactories | HypNFTFactories
   >,
   warpCoreConfigByChain: ChainMap<WarpCoreConfig['tokens'][number]>,
 ) {
@@ -682,11 +682,11 @@ function mergeAllRouters(
   );
   return {
     ...connectContractsMap(
-      attachContractsMap(existingContractAddresses, hypERC20factories),
+      attachContractsMap(existingContractAddresses, hypTokenFactories),
       multiProvider,
     ),
     ...deployedContractsMap,
-  } as HyperlaneContractsMap<HypERC20Factories>;
+  } as HyperlaneContractsMap<HypTokenFactories>;
 }
 
 function displayWarpDeployPlan(
