@@ -18,7 +18,6 @@ export const awIcas: ChainMap<Address> = {
   // ----------------------------------------------------------
   cyber: '0x984Fe5a45Ac4aaeC4E4655b50f776aB79c9Be19F',
   degenchain: '0x22d952d3b9F493442731a3c7660aCaD98e55C00A',
-  kroma: '0xc1e20A0D78E79B94D71d4bDBC8FD0Af7c856Dd7A',
   lisk: '0x22d952d3b9F493442731a3c7660aCaD98e55C00A',
   lukso: '0xc1e20A0D78E79B94D71d4bDBC8FD0Af7c856Dd7A',
   merlin: '0xCf867cEaeeE8CBe65C680c734D29d26440931D5b',
@@ -126,7 +125,6 @@ export const awIcas: ChainMap<Address> = {
   // Jan 13, 2025 batch
   // ----------------------------------------------------------
   artela: '0x745CEA119757ea3e27093da590bC91f408bD4448',
-  guru: '0x825cF3d703F384E4aA846BA72eCf70f1985C91b6',
   hemi: '0x8D18CBB212920e5ef070b23b813d82F8981cC276',
   nero: '0xbBdb1682B2922C282b56DD716C29db5EFbdb5632',
   torus: '0xc1e20A0D78E79B94D71d4bDBC8FD0Af7c856Dd7A',
