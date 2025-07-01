@@ -594,8 +594,8 @@ export {
   TokenFactories,
 } from './token/contracts.js';
 export { HypTokenDeployer, HypNFTDeployer } from './token/deploy.js';
-export { EvmERC20WarpModule } from './token/EvmERC20WarpModule.js';
-export { EvmERC20WarpRouteReader } from './token/EvmERC20WarpRouteReader.js';
+export { EvmTokenWarpModule } from './token/EvmTokenWarpModule.js';
+export { EvmTokenWarpRouteReader } from './token/EvmTokenWarpRouteReader.js';
 export { IToken, TokenArgs, TokenConfigSchema } from './token/IToken.js';
 export { Token } from './token/Token.js';
 export { TokenAmount } from './token/TokenAmount.js';

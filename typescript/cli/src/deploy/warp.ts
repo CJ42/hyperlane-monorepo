@@ -18,7 +18,7 @@ import {
   ChainSubmissionStrategySchema,
   ContractVerifier,
   EVM_TOKEN_TYPE_TO_STANDARD,
-  EvmERC20WarpModule,
+  EvmTokenWarpModule,
   ExplorerLicenseType,
   HypNFTFactories,
   HypTokenDeployer,
@@ -572,7 +572,7 @@ async function updateExistingWarpRoute(
           mailbox: registryAddresses[chain].mailbox,
         };
 
-        const evmERC20WarpModule = new EvmERC20WarpModule(
+        const evmERC20WarpModule = new EvmTokenWarpModule(
           multiProvider,
           {
             config: configWithMailbox,

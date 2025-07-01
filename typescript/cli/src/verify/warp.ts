@@ -3,7 +3,7 @@ import { ContractFactory } from 'ethers';
 import { buildArtifact } from '@hyperlane-xyz/core/buildArtifact.js';
 import {
   ChainMap,
-  EvmERC20WarpRouteReader,
+  EvmTokenWarpRouteReader,
   ExplorerLicenseType,
   MultiProvider,
   PostDeploymentContractVerifier,
@@ -127,7 +127,7 @@ async function getWarpRouteFactory(
     | TokenType.collateralLSP8
   >;
 }> {
-  const warpRouteReader = new EvmERC20WarpRouteReader(multiProvider, chainName);
+  const warpRouteReader = new EvmTokenWarpRouteReader(multiProvider, chainName);
   const tokenType = (await warpRouteReader.deriveTokenType(
     warpRouteAddress,
   )) as Exclude<

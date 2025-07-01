@@ -228,10 +228,12 @@ export class EvmLSP7TokenAdapter<
   }
 
   override async getMetadata(isNft?: boolean): Promise<TokenMetadata> {
-    const [decimals, symbolHex, nameHex] = await Promise.all([
+    const [decimals, [symbolHex, nameHex]] = await Promise.all([
       isNft ? 0 : this.contract.decimals(),
-      this.contract['getData(bytes32)'](LSP4DataKeys.LSP4TokenSymbol),
-      this.contract['getData(bytes32)'](LSP4DataKeys.LSP4TokenName),
+      this.contract.getDataBatch([
+        LSP4DataKeys.LSP4TokenSymbol,
+        LSP4DataKeys.LSP4TokenName,
+      ]),
     ]);
 
     const symbol = toUtf8String(symbolHex);
@@ -268,7 +270,7 @@ export class EvmLSP7TokenAdapter<
       from,
       recipient,
       weiAmountOrId.toString(),
-      true,
+      true, // `force` parameter set to true to allow transfers to any addresses
       '0x',
     );
   }

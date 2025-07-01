@@ -9,7 +9,7 @@ import {
   ChainMap,
   ChainName,
   DerivedWarpRouteDeployConfig,
-  EvmERC20WarpRouteReader,
+  EvmTokenWarpRouteReader,
   HypTokenRouterConfig,
   MultiProvider,
   TokenStandard,
@@ -89,7 +89,7 @@ async function deriveWarpRouteConfigs(
   // Derive and return warp route config
   return promiseObjAll(
     objMap(addresses, async (chain, address) =>
-      new EvmERC20WarpRouteReader(multiProvider, chain).deriveWarpRouteConfig(
+      new EvmTokenWarpRouteReader(multiProvider, chain).deriveWarpRouteConfig(
         address,
       ),
     ),

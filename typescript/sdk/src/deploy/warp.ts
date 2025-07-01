@@ -36,7 +36,7 @@ export async function executeWarpDeploy(
 ): Promise<HyperlaneContractsMap<HypTokenFactories | HypNFTFactories>> {
   const deployer = warpDeployConfig.isNft
     ? new HypNFTDeployer(multiProvider)
-    : new HypTokenDeployer(multiProvider); // TODO: replace with EvmERC20WarpModule
+    : new HypTokenDeployer(multiProvider); // TODO: replace with EvmTokenWarpModule
 
   const contractVerifier = new ContractVerifier(
     multiProvider,

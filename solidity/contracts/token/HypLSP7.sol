@@ -29,7 +29,7 @@ contract HypLSP7 is LSP7DigitalAssetInitAbstract, TokenRouter {
      * @dev The `LSP4TokenType` is hardcoded to type `Token` (= `0`) as all ERC20 tokens are of token type 0.
      * This aims to keep the number of parameters consistent between hyperc20 and hypLSP7, so that the code of off-chain
      * agents that call this function
-     * does not need to be modifed to add an extra parameter that would be irrelevant.
+     * does not need to be modified to add an extra parameter that would be irrelevant.
      */
     function initialize(
         uint256 _totalSupply,
@@ -46,7 +46,7 @@ contract HypLSP7 is LSP7DigitalAssetInitAbstract, TokenRouter {
             newOwner_: _owner,
             lsp4TokenType_: _LSP4_TOKEN_TYPE_TOKEN,
             isNonDivisible_: false // isNonDivisible set to `false` as will not be used anyway since decimals() is
-            // overriden
+            // overridden
         });
 
         // mints initial supply to deployer
