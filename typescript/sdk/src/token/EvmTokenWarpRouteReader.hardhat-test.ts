@@ -42,9 +42,9 @@ import { HyperlaneIsmFactory } from '../ism/HyperlaneIsmFactory.js';
 import { MultiProvider } from '../providers/MultiProvider.js';
 import { ChainMap } from '../types.js';
 
-import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
+import { EvmTokenWarpRouteReader } from './EvmTokenWarpRouteReader.js';
 import { TokenType } from './config.js';
-import { HypERC20Deployer } from './deploy.js';
+import { HypTokenDeployer } from './deploy.js';
 import {
   ContractVerificationStatus,
   OwnerStatus,
@@ -62,14 +62,14 @@ describe('ERC20WarpRouterReader', async () => {
   let erc20Factory: ERC20Test__factory;
   let token: ERC20Test;
   let signer: SignerWithAddress;
-  let deployer: HypERC20Deployer;
+  let deployer: HypTokenDeployer;
   let contractVerifier: ContractVerifier;
   let multiProvider: MultiProvider;
   let coreApp: TestCoreApp;
   let routerConfigMap: ChainMap<RouterConfig>;
   let baseConfig: RouterConfig;
   let mailbox: Mailbox;
-  let evmERC20WarpRouteReader: EvmERC20WarpRouteReader;
+  let evmERC20WarpRouteReader: EvmTokenWarpRouteReader;
   let vault: ERC4626;
   let collateralFiatToken: FiatTokenTest;
   before(async () => {
@@ -94,7 +94,8 @@ describe('ERC20WarpRouterReader', async () => {
 
     baseConfig = routerConfigMap[chain];
     mailbox = Mailbox__factory.connect(baseConfig.mailbox, signer);
-    deployer = new HypERC20Deployer(multiProvider);
+    evmERC20WarpRouteReader = new EvmTokenWarpRouteReader(multiProvider, chain);
+    deployer = new HypTokenDeployer(multiProvider);
 
     const vaultFactory = new ERC4626Test__factory(signer);
     vault = await vaultFactory.deploy(token.address, TOKEN_NAME, TOKEN_NAME);
@@ -117,13 +118,13 @@ describe('ERC20WarpRouterReader', async () => {
       coreBuildArtifact,
       ExplorerLicenseType.MIT,
     );
-    evmERC20WarpRouteReader = new EvmERC20WarpRouteReader(
+    evmERC20WarpRouteReader = new EvmTokenWarpRouteReader(
       multiProvider,
       chain,
       1,
       contractVerifier,
     );
-    deployer = new HypERC20Deployer(multiProvider);
+    deployer = new HypTokenDeployer(multiProvider);
   });
 
   it('should derive a token type from contract', async () => {

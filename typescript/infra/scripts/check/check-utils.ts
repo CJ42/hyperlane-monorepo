@@ -16,7 +16,7 @@ import {
   InterchainQueryChecker,
   MultiProvider,
   attachContractsMapAndGetForeignDeployments,
-  hypERC20factories,
+  hypTokenFactories,
   proxiedFactories,
 } from '@hyperlane-xyz/sdk';
 import { eqAddress, objFilter } from '@hyperlane-xyz/utils';
@@ -245,7 +245,7 @@ export async function getGovernor(
     const { contractsMap, foreignDeployments } =
       attachContractsMapAndGetForeignDeployments(
         filteredAddresses,
-        { ...hypERC20factories, ...proxiedFactories },
+        { ...hypTokenFactories, ...proxiedFactories },
         multiProvider,
       );
 

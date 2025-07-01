@@ -14,14 +14,14 @@ import { GasRouterApp } from '../router/RouterApps.js';
 import { ProxiedFactories, proxiedFactories } from '../router/types.js';
 import { ChainMap } from '../types.js';
 
-import { HypERC20Factories, hypERC20factories } from './contracts.js';
+import { HypTokenFactories, hypTokenFactories } from './contracts.js';
 
 export class HypERC20App extends GasRouterApp<
-  HypERC20Factories & ProxiedFactories,
+  HypTokenFactories & ProxiedFactories,
   TokenRouter
 > {
   constructor(
-    contractsMap: HyperlaneContractsMap<HypERC20Factories & ProxiedFactories>,
+    contractsMap: HyperlaneContractsMap<HypTokenFactories & ProxiedFactories>,
     multiProvider: MultiProvider,
     logger?: Logger,
     foreignDeployments: ChainMap<Address> = {},
@@ -29,8 +29,8 @@ export class HypERC20App extends GasRouterApp<
     super(contractsMap, multiProvider, logger, foreignDeployments);
   }
 
-  router(contracts: HyperlaneContracts<HypERC20Factories>): TokenRouter {
-    for (const key of objKeys(hypERC20factories)) {
+  router(contracts: HyperlaneContracts<HypTokenFactories>): TokenRouter {
+    for (const key of objKeys(hypTokenFactories)) {
       if (contracts[key]) {
         return contracts[key] as unknown as TokenRouter;
       }
@@ -39,12 +39,12 @@ export class HypERC20App extends GasRouterApp<
   }
 
   static fromAddressesMap(
-    addressesMap: HyperlaneAddressesMap<HypERC20Factories & ProxiedFactories>,
+    addressesMap: HyperlaneAddressesMap<HypTokenFactories & ProxiedFactories>,
     multiProvider: MultiProvider,
   ): HypERC20App {
     const helper = appFromAddressesMapHelper(
       addressesMap,
-      { ...hypERC20factories, ...proxiedFactories },
+      { ...hypTokenFactories, ...proxiedFactories },
       multiProvider,
     );
     return new HypERC20App(helper.contractsMap, helper.multiProvider);
