@@ -2,5 +2,7 @@
 @eth-optimism=../node_modules/@eth-optimism
 @openzeppelin=../node_modules/@openzeppelin
 @chainlink=../node_modules/@chainlink
+@lukso=../node_modules/@lukso
+@erc725=../node_modules/@erc725
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/

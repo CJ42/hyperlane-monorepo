@@ -11,7 +11,7 @@ import {
   CosmosNativeWarpRouteReader,
   DerivedTokenRouterConfig,
   DerivedWarpRouteDeployConfig,
-  EvmERC20WarpRouteReader,
+  EvmTokenWarpRouteReader,
   HypTokenRouterConfig,
   MultiProvider,
   TokenStandard,
@@ -95,7 +95,7 @@ async function deriveWarpRouteConfigs(
     objMap(addresses, async (chain, address) => {
       switch (context.multiProvider.getProtocol(chain)) {
         case ProtocolType.Ethereum: {
-          return new EvmERC20WarpRouteReader(
+          return new EvmTokenWarpRouteReader(
             multiProvider,
             chain,
           ).deriveWarpRouteConfig(address);

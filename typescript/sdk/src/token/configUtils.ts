@@ -25,7 +25,7 @@ import { DestinationGas, RemoteRouters } from '../router/types.js';
 import { ChainMap } from '../types.js';
 import { WarpCoreConfig } from '../warp/types.js';
 
-import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
+import { EvmTokenWarpRouteReader } from './EvmTokenWarpRouteReader.js';
 import { TokenMetadataMap } from './TokenMetadataMap.js';
 import { gasOverhead } from './config.js';
 import { HypTokenDeployer } from './deploy.js';
@@ -283,7 +283,7 @@ export async function expandVirtualWarpDeployConfig(params: {
   const { multiProvider, onChainWarpConfig, deployedRoutersAddresses } = params;
   return promiseObjAll(
     objMap(onChainWarpConfig, async (chain, config) => {
-      const warpReader = new EvmERC20WarpRouteReader(multiProvider, chain);
+      const warpReader = new EvmTokenWarpRouteReader(multiProvider, chain);
       const warpVirtualConfig = await warpReader.deriveWarpRouteVirtualConfig(
         chain,
         deployedRoutersAddresses[chain],

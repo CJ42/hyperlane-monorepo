@@ -1,7 +1,4 @@
-import { LSP4DataKeys } from '@lukso/lsp4-contracts';
-import { HypLSP7__factory } from '@lukso/lsp-hyperlane-token-routers';
 import { constants } from 'ethers';
-import { toUtf8String } from 'ethers/lib/utils.js';
 
 import {
   ERC20__factory,
@@ -36,6 +33,7 @@ import { GasRouterDeployer } from '../router/GasRouterDeployer.js';
 import { resolveRouterMapConfig } from '../router/types.js';
 import { ChainMap, ChainName } from '../types.js';
 
+import { EvmTokenWarpRouteReader } from './EvmTokenWarpRouteReader.js';
 import { TokenMetadataMap } from './TokenMetadataMap.js';
 import { TokenType, gasOverhead } from './config.js';
 import {
@@ -267,6 +265,21 @@ abstract class TokenDeployer<
           continue;
         }
 
+        if (
+          config.type === TokenType.collateralLSP7 ||
+          config.type === TokenType.collateralLSP8
+        ) {
+          const evmTokenWarpRouteReader = new EvmTokenWarpRouteReader(
+            multiProvider,
+            chain,
+          );
+          metadataMap.set(
+            chain,
+            await evmTokenWarpRouteReader.fetchLSP7Metadata(config.token),
+          );
+          continue;
+        }
+
         let token: string;
         switch (config.type) {
           case TokenType.XERC20Lockbox:
@@ -284,30 +297,6 @@ abstract class TokenDeployer<
           default:
             token = config.token;
             break;
-        }
-
-        if (
-          config.type === TokenType.collateralLSP7 ||
-          config.type === TokenType.collateralLSP8
-        ) {
-          const lsp7 = HypLSP7__factory.connect(token, provider);
-
-          const [encodedName, encodedSymbol] = await lsp7.getDataBatch([
-            LSP4DataKeys.LSP4TokenName,
-            LSP4DataKeys.LSP4TokenSymbol,
-          ]);
-
-          const name = toUtf8String(encodedName);
-          const symbol = toUtf8String(encodedSymbol);
-
-          metadataMap.set(
-            chain,
-            TokenMetadataSchema.parse({
-              name,
-              symbol,
-            }),
-          );
-          continue;
         }
 
         const erc20 = ERC20__factory.connect(token, provider);

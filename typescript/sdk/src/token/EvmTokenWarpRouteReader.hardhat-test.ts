@@ -42,7 +42,7 @@ import { HyperlaneIsmFactory } from '../ism/HyperlaneIsmFactory.js';
 import { MultiProvider } from '../providers/MultiProvider.js';
 import { ChainMap } from '../types.js';
 
-import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
+import { EvmTokenWarpRouteReader } from './EvmTokenWarpRouteReader.js';
 import { TokenType } from './config.js';
 import { HypTokenDeployer } from './deploy.js';
 import {
@@ -69,7 +69,7 @@ describe('ERC20WarpRouterReader', async () => {
   let routerConfigMap: ChainMap<RouterConfig>;
   let baseConfig: RouterConfig;
   let mailbox: Mailbox;
-  let evmERC20WarpRouteReader: EvmERC20WarpRouteReader;
+  let evmERC20WarpRouteReader: EvmTokenWarpRouteReader;
   let vault: ERC4626;
   let collateralFiatToken: FiatTokenTest;
   before(async () => {
@@ -94,7 +94,7 @@ describe('ERC20WarpRouterReader', async () => {
 
     baseConfig = routerConfigMap[chain];
     mailbox = Mailbox__factory.connect(baseConfig.mailbox, signer);
-    evmERC20WarpRouteReader = new EvmERC20WarpRouteReader(multiProvider, chain);
+    evmERC20WarpRouteReader = new EvmTokenWarpRouteReader(multiProvider, chain);
     deployer = new HypTokenDeployer(multiProvider);
 
     const vaultFactory = new ERC4626Test__factory(signer);
@@ -118,7 +118,7 @@ describe('ERC20WarpRouterReader', async () => {
       coreBuildArtifact,
       ExplorerLicenseType.MIT,
     );
-    evmERC20WarpRouteReader = new EvmERC20WarpRouteReader(
+    evmERC20WarpRouteReader = new EvmTokenWarpRouteReader(
       multiProvider,
       chain,
       1,

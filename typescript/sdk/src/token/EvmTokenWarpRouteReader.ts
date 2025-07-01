@@ -76,9 +76,9 @@ import { getExtraLockBoxConfigs } from './xerc20.js';
 
 const REBALANCING_CONTRACT_VERSION = '8.0.0';
 
-export class EvmERC20WarpRouteReader extends EvmRouterReader {
+export class EvmTokenWarpRouteReader extends EvmRouterReader {
   protected readonly logger = rootLogger.child({
-    module: 'EvmERC20WarpRouteReader',
+    module: 'EvmTokenWarpRouteReader',
   });
 
   // Using null instead of undefined to force
