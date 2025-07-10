@@ -104,7 +104,11 @@ export class EvmTokenWarpRouteReader extends EvmRouterReader {
       [TokenType.XERC20Lockbox]:
         this.deriveHypXERC20LockboxTokenConfig.bind(this),
       [TokenType.collateral]: this.deriveHypCollateralTokenConfig.bind(this),
+      [TokenType.collateralPausable]:
+        this.deriveHypCollateralTokenConfig.bind(this),
       [TokenType.collateralLSP7]:
+        this.deriveHypLSP7CollateralTokenConfig.bind(this),
+      [TokenType.collateralLSP7Pausable]:
         this.deriveHypLSP7CollateralTokenConfig.bind(this),
       [TokenType.collateralFiat]:
         this.deriveHypCollateralFiatTokenConfig.bind(this),
@@ -115,10 +119,15 @@ export class EvmTokenWarpRouteReader extends EvmRouterReader {
       [TokenType.collateralVaultRebase]:
         this.deriveHypCollateralVaultRebaseTokenConfig.bind(this),
       [TokenType.native]: this.deriveHypNativeTokenConfig.bind(this),
+      [TokenType.nativePausable]: this.deriveHypNativeTokenConfig.bind(this),
       [TokenType.nativeOpL2]: this.deriveOpL2TokenConfig.bind(this),
       [TokenType.nativeOpL1]: this.deriveOpL1TokenConfig.bind(this),
       [TokenType.synthetic]: this.deriveHypSyntheticTokenConfig.bind(this),
+      [TokenType.syntheticPausable]:
+        this.deriveHypSyntheticTokenConfig.bind(this),
       [TokenType.syntheticLSP7]:
+        this.deriveHypLSP7SyntheticTokenConfig.bind(this),
+      [TokenType.syntheticLSP7Pausable]:
         this.deriveHypLSP7SyntheticTokenConfig.bind(this),
       [TokenType.syntheticRebase]:
         this.deriveHypSyntheticRebaseConfig.bind(this),
@@ -126,7 +135,9 @@ export class EvmTokenWarpRouteReader extends EvmRouterReader {
       [TokenType.collateralUri]: null,
       [TokenType.syntheticUri]: null,
       [TokenType.collateralLSP8]: null,
+      [TokenType.collateralLSP8Pausable]: null,
       [TokenType.syntheticLSP8]: null,
+      [TokenType.syntheticLSP8Pausable]: null,
     };
 
     this.contractVerifier =

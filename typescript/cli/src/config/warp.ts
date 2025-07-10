@@ -42,16 +42,26 @@ import { createAdvancedIsmConfig } from './ism.js';
 
 const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
   [TokenType.synthetic]: 'A new ERC20 with remote transfer functionality',
+  [TokenType.syntheticPausable]:
+    'A new ERC20 with pausable remote transfer functionality',
   [TokenType.syntheticLSP7]: 'A new LSP7 with remote transfer functionality',
+  [TokenType.syntheticLSP7Pausable]:
+    'A new LSP7 with pausable remote transfer functionality',
   [TokenType.syntheticRebase]: `A rebasing ERC20 with remote transfer functionality. Must be paired with ${TokenType.collateralVaultRebase}`,
   [TokenType.collateral]:
     'Extends an existing ERC20 with remote transfer functionality',
+  [TokenType.collateralPausable]:
+    'Extends an existing ERC20 with pausable remote transfer functionality',
   [TokenType.collateralLSP7]:
     'Extends an existing LSP7 with remote transfer functionality',
+  [TokenType.collateralLSP7Pausable]:
+    'Extends an existing LSP7 with pausable remote transfer functionality',
   [TokenType.collateralCctp]:
     'A collateral token that can be transferred via CCTP',
   [TokenType.native]:
     'Extends the native token with remote transfer functionality',
+  [TokenType.nativePausable]:
+    'Extends the native token with pausable remote transfer functionality',
   [TokenType.collateralVault]:
     'Extends an existing ERC4626 with remote transfer functionality. Yields are manually claimed by owner.',
   [TokenType.collateralVaultRebase]:
@@ -67,8 +77,10 @@ const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
   // TODO: describe
   [TokenType.syntheticUri]: '',
   [TokenType.syntheticLSP8]: '',
+  [TokenType.syntheticLSP8Pausable]: '',
   [TokenType.collateralUri]: '',
   [TokenType.collateralLSP8]: '',
+  [TokenType.collateralLSP8Pausable]: '',
   [TokenType.nativeScaled]: '',
 };
 
