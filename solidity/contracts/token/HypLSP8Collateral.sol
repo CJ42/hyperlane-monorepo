@@ -1,32 +1,44 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity >=0.8.19;
 
-import {TokenRouter} from "./libs/TokenRouter.sol";
-
-import {TokenMessage} from "./libs/TokenMessage.sol";
-
+// Interfaces
 import {ILSP8IdentifiableDigitalAsset as ILSP8} from "@lukso/lsp8-contracts/contracts/ILSP8IdentifiableDigitalAsset.sol";
 
+// Modules
+import {TokenRouter} from "./libs/TokenRouter.sol";
+
+// Libraries
+import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+
 /**
- * @title Hyperlane LSP8 Token Collateral that wraps an existing LSP8 with remote transfer functionality.
- * @author Abacus Works
+ * @title LSP8 version of the Hyperlane ERC721 Token Collateral that wraps an existing LSP8 with remote transfer
+ * functionality
+ * @dev See following links for reference:
+ * - HypERC721Collateral implementation:
+ * https://github.com/hyperlane-xyz/hyperlane-monorepo/blob/main/solidity/contracts/token/HypERC721Collateral.sol
+ * - LSP8 standard: https://github.com/lukso-network/LIPs/blob/main/LSPs/LSP-8-IdentifiableDigitalAsset.md
  */
 contract HypLSP8Collateral is TokenRouter {
+    // solhint-disable-next-line immutable-vars-naming
     ILSP8 public immutable wrappedToken;
 
     /**
      * @notice Constructor
-     * @param lsp8 Address of the token to keep as collateral
+     *
+     * @param lsp8_ Address of the token to keep as collateral
      */
-    constructor(address lsp8, address _mailbox) TokenRouter(_mailbox) {
-        wrappedToken = ILSP8(lsp8);
+    constructor(address lsp8_, address mailbox_) TokenRouter(mailbox_) {
+        // solhint-disable-next-line custom-errors
+        require(Address.isContract(lsp8_), "HypLSP8Collateral: invalid token");
+        wrappedToken = ILSP8(lsp8_);
     }
 
     /**
      * @notice Initializes the Hyperlane router
+     *
      * @param _hook The post-dispatch hook contract.
-     *    @param _interchainSecurityModule The interchain security module contract.
-     *    @param _owner The this contract.
+     * @param _interchainSecurityModule The interchain security module contract.
+     * @param _owner The this contract.
      */
     function initialize(
         address _hook,
@@ -37,7 +49,7 @@ contract HypLSP8Collateral is TokenRouter {
     }
 
     function ownerOf(uint256 _tokenId) external view returns (address) {
-        return ILSP8(wrappedToken).tokenOwnerOf(bytes32(_tokenId));
+        return wrappedToken.tokenOwnerOf(bytes32(_tokenId));
     }
 
     /**
@@ -47,11 +59,14 @@ contract HypLSP8Collateral is TokenRouter {
     function balanceOf(
         address _account
     ) external view override returns (uint256) {
-        return ILSP8(wrappedToken).balanceOf(_account);
+        return wrappedToken.balanceOf(_account);
     }
 
     /**
      * @dev Transfers `_tokenId` of `wrappedToken` from `msg.sender` to this contract.
+     * Note that this function will also trigger a callback to the `universalReceiver(...)` function
+     * on the `msg.sender` if it is a contract that supports + implements the LSP1 standard.
+     *
      * @inheritdoc TokenRouter
      */
     function _transferFromSender(
@@ -69,13 +84,16 @@ contract HypLSP8Collateral is TokenRouter {
 
     /**
      * @dev Transfers `_tokenId` of `wrappedToken` from this contract to `_recipient`.
+     * Note that this function will also trigger a callback to the `universalReceiver(...)` function
+     * on the `_recipient` if it is a contract that supports + implements the LSP1 standard.
+     *
      * @inheritdoc TokenRouter
      */
     function _transferTo(
         address _recipient,
         uint256 _tokenId,
         bytes calldata // no metadata
-    ) internal override {
+    ) internal virtual override {
         wrappedToken.transfer(
             address(this),
             _recipient,

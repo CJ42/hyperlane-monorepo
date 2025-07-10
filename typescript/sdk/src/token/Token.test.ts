@@ -31,10 +31,15 @@ const STANDARD_TO_TOKEN: Record<TokenStandard, TokenArgs | null> = {
   },
   [TokenStandard.ERC721]: null,
   [TokenStandard.EvmHypLSP7Collateral]: null,
+  [TokenStandard.EvmHypLSP7CollateralPausable]: null,
   [TokenStandard.EvmHypLSP7Synthetic]: null,
+  [TokenStandard.EvmHypLSP7SyntheticPausable]: null,
   [TokenStandard.EvmHypLSP8Collateral]: null,
+  [TokenStandard.EvmHypLSP8CollateralPausable]: null,
   [TokenStandard.EvmHypLSP8Synthetic]: null,
+  [TokenStandard.EvmHypLSP8SyntheticPausable]: null,
   [TokenStandard.EvmNative]: Token.FromChainMetadataNativeToken(test1),
+  [TokenStandard.EvmHypNativePausable]: null,
   [TokenStandard.EvmHypNative]: {
     chainName: TestChainName.test2,
     standard: TokenStandard.EvmHypNative,
@@ -43,6 +48,7 @@ const STANDARD_TO_TOKEN: Record<TokenStandard, TokenArgs | null> = {
     symbol: 'INJ',
     name: 'Injective Coin',
   },
+  [TokenStandard.EvmHypCollateralPausable]: null,
   [TokenStandard.EvmHypCollateral]: {
     chainName: TestChainName.test3,
     standard: TokenStandard.EvmHypCollateral,
@@ -79,6 +85,7 @@ const STANDARD_TO_TOKEN: Record<TokenStandard, TokenArgs | null> = {
     symbol: 'USDC',
     name: 'USDC',
   },
+  [TokenStandard.EvmHypSyntheticPausable]: null,
   [TokenStandard.EvmHypSynthetic]: {
     chainName: TestChainName.test2,
     standard: TokenStandard.EvmHypSynthetic,
