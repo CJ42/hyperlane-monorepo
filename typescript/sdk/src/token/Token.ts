@@ -46,6 +46,8 @@ import {
 import {
   EvmHypCollateralAdapter,
   EvmHypCollateralFiatAdapter,
+  EvmHypLSP7CollateralAdapter,
+  EvmHypLSP7SyntheticAdapter,
   EvmHypNativeAdapter,
   EvmHypRebaseCollateralAdapter,
   EvmHypSyntheticAdapter,
@@ -214,6 +216,14 @@ export class Token implements IToken {
       });
     } else if (standard === TokenStandard.EvmHypCollateralFiat) {
       return new EvmHypCollateralFiatAdapter(chainName, multiProvider, {
+        token: addressOrDenom,
+      });
+    } else if (standard === TokenStandard.EvmHypLSP7Collateral) {
+      return new EvmHypLSP7CollateralAdapter(chainName, multiProvider, {
+        token: addressOrDenom,
+      });
+    } else if (standard === TokenStandard.EvmHypLSP7Synthetic) {
+      return new EvmHypLSP7SyntheticAdapter(chainName, multiProvider, {
         token: addressOrDenom,
       });
     } else if (standard === TokenStandard.EvmHypSynthetic) {

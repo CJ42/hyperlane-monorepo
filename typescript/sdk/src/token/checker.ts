@@ -21,7 +21,7 @@ import { ChainName } from '../types.js';
 
 import { HypERC20App } from './app.js';
 import { TokenType } from './config.js';
-import { HypERC20Factories } from './contracts.js';
+import { HypTokenFactories } from './contracts.js';
 import {
   HypTokenRouterConfig,
   TokenMetadata,
@@ -32,7 +32,7 @@ import {
 } from './types.js';
 
 export class HypERC20Checker extends ProxiedRouterChecker<
-  HypERC20Factories & ProxiedFactories,
+  HypTokenFactories & ProxiedFactories,
   HypERC20App,
   HypTokenRouterConfig
 > {

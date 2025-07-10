@@ -52,9 +52,9 @@ import { RemoteRouters, resolveRouterMapConfig } from '../router/types.js';
 import { ChainName, ChainNameOrId } from '../types.js';
 import { extractIsmAndHookFactoryAddresses } from '../utils/ism.js';
 
-import { EvmERC20WarpRouteReader } from './EvmERC20WarpRouteReader.js';
-import { hypERC20contracts } from './contracts.js';
-import { HypERC20Deployer } from './deploy.js';
+import { EvmTokenWarpRouteReader } from './EvmTokenWarpRouteReader.js';
+import { hypTokenContracts } from './contracts.js';
+import { HypTokenDeployer } from './deploy.js';
 import {
   DerivedTokenRouterConfig,
   HypTokenRouterConfig,
@@ -86,15 +86,15 @@ const getAllowedRebalancingBridgesByDomain = (
     },
   );
 };
-export class EvmERC20WarpModule extends HyperlaneModule<
+export class EvmTokenWarpModule extends HyperlaneModule<
   ProtocolType.Ethereum,
   HypTokenRouterConfig,
   WarpRouteAddresses
 > {
   protected logger = rootLogger.child({
-    module: 'EvmERC20WarpModule',
+    module: 'EvmTokenWarpModule',
   });
-  reader: EvmERC20WarpRouteReader;
+  reader: EvmTokenWarpRouteReader;
   public readonly chainName: ChainName;
   public readonly chainId: EvmChainId;
   public readonly domainId: Domain;
@@ -106,7 +106,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
     protected readonly contractVerifier?: ContractVerifier,
   ) {
     super(args);
-    this.reader = new EvmERC20WarpRouteReader(multiProvider, args.chain);
+    this.reader = new EvmTokenWarpRouteReader(multiProvider, args.chain);
     this.chainName = this.multiProvider.getChainName(args.chain);
     this.chainId = multiProvider.getEvmChainId(args.chain);
     this.domainId = multiProvider.getDomainId(args.chain);
@@ -770,7 +770,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
     const updateTransactions: AnnotatedEV5Transaction[] = [];
 
     // This should be impossible since we try catch the call to `PACKAGE_VERSION`
-    // in `EvmERC20WarpRouteReader.fetchPackageVersion`
+    // in `EvmTokenWarpRouteReader.fetchPackageVersion`
     assert(
       actualConfig.contractVersion,
       'Actual contract version is undefined',
@@ -808,7 +808,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       `Upgrading Warp Route implementation on ${this.args.chain} from ${actualConfig.contractVersion} to ${expectedConfig.contractVersion}`,
     );
 
-    const deployer = new HypERC20Deployer(this.multiProvider);
+    const deployer = new HypTokenDeployer(this.multiProvider);
     const constructorArgs = await deployer.constructorArgs(
       this.chainName,
       expectedConfig,
@@ -816,7 +816,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
     const implementation = await deployer.deployContractWithName(
       this.chainName,
       expectedConfig.type,
-      hypERC20contracts[expectedConfig.type],
+      hypTokenContracts[expectedConfig.type],
       constructorArgs,
       undefined,
       false,
@@ -859,7 +859,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
     ccipContractCache?: CCIPContractCache;
     contractVerifier?: ContractVerifier;
     proxyFactoryFactories: HyperlaneAddresses<ProxyFactoryFactories>;
-  }): Promise<EvmERC20WarpModule> {
+  }): Promise<EvmTokenWarpModule> {
     const {
       chain,
       config,
@@ -869,10 +869,10 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       proxyFactoryFactories,
     } = params;
     const chainName = multiProvider.getChainName(chain);
-    const deployer = new HypERC20Deployer(multiProvider);
+    const deployer = new HypTokenDeployer(multiProvider);
     const deployedContracts = await deployer.deployContracts(chainName, config);
 
-    const warpModule = new EvmERC20WarpModule(
+    const warpModule = new EvmTokenWarpModule(
       multiProvider,
       {
         addresses: {
@@ -892,7 +892,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
         await warpModule.createEnrollRemoteRoutersUpdateTxs(
           actualConfig,
           config,
-        ); // @TODO Remove when EvmERC20WarpModule.create can be used
+        ); // @TODO Remove when EvmTokenWarpModule.create can be used
       const onlyTxIndex = 0;
       await multiProvider.sendTransaction(chain, enrollRemoteTxs[onlyTxIndex]);
     }
@@ -905,7 +905,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       const addRebalancerTxs = await warpModule.createAddRebalancersUpdateTxs(
         actualConfig,
         config,
-      ); // @TODO Remove when EvmERC20WarpModule.create can be used
+      ); // @TODO Remove when EvmTokenWarpModule.create can be used
 
       for (const tx of addRebalancerTxs) {
         await multiProvider.sendTransaction(chain, tx);
@@ -920,7 +920,7 @@ export class EvmERC20WarpModule extends HyperlaneModule<
       const addBridgesTxs = await warpModule.createAddAllowedBridgesUpdateTxs(
         actualConfig,
         config,
-      ); // @TODO Remove when EvmERC20WarpModule.create can be used
+      ); // @TODO Remove when EvmTokenWarpModule.create can be used
 
       for (const tx of addBridgesTxs) {
         await multiProvider.sendTransaction(chain, tx);
