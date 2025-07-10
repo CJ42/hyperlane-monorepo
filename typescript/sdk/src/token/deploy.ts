@@ -267,7 +267,9 @@ abstract class TokenDeployer<
 
         if (
           config.type === TokenType.collateralLSP7 ||
-          config.type === TokenType.collateralLSP8
+          config.type === TokenType.collateralLSP7Pausable ||
+          config.type === TokenType.collateralLSP8 ||
+          config.type === TokenType.collateralLSP8Pausable
         ) {
           const evmTokenWarpRouteReader = new EvmTokenWarpRouteReader(
             multiProvider,
