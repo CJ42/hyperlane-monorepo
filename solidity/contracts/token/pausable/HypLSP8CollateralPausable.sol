@@ -1,15 +1,15 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.19;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.8.22;
 
 // modules
-import {Freezable} from "./Freezable.sol";
+import {PausableController} from "./PausableController.sol";
 import {HypLSP8Collateral} from "../HypLSP8Collateral.sol";
 
 /**
  * @title HypLSP8Collateral with Pausable functionalities
- * @dev See the `Freezable` contract for more details
+ * @dev See the `PausableController` contract for more details
  */
-contract HypLSP8CollateralPausable is HypLSP8Collateral, Freezable {
+contract HypLSP8CollateralPausable is HypLSP8Collateral, PausableController {
     constructor(
         address lsp8_,
         address mailbox_

@@ -1,15 +1,15 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.19;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.8.22;
 
 // modules
 import {HypNative} from "../HypNative.sol";
-import {Freezable} from "./Freezable.sol";
+import {PausableController} from "./PausableController.sol";
 
 /**
  * @title Hyperlane Native Token Router with Pausable functionalities
- * @dev See the `Freezable` contract for more details
+ * @dev See the `PausableController` contract for more details
  */
-contract HypNativePausable is HypNative, Freezable {
+contract HypNativePausable is HypNative, PausableController {
     /**
      * @param _scale A parameter used for native tokens that use different number of decimals than 1e18 (e.g: Solana
      * Sealevel with 1e9 for 9 decimals)
