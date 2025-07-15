@@ -42,16 +42,26 @@ import { createAdvancedIsmConfig } from './ism.js';
 
 const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
   [TokenType.synthetic]: 'A new ERC20 with remote transfer functionality',
+  [TokenType.syntheticPausable]:
+    'A new ERC20 with pausable remote transfer functionality',
   [TokenType.syntheticLSP7]: 'A new LSP7 with remote transfer functionality',
+  [TokenType.syntheticLSP7Pausable]:
+    'A new LSP7 with pausable remote transfer functionality',
   [TokenType.syntheticRebase]: `A rebasing ERC20 with remote transfer functionality. Must be paired with ${TokenType.collateralVaultRebase}`,
   [TokenType.collateral]:
     'Extends an existing ERC20 with remote transfer functionality',
+  [TokenType.collateralPausable]:
+    'Extends an existing ERC20 with pausable remote transfer functionality',
   [TokenType.collateralLSP7]:
     'Extends an existing LSP7 with remote transfer functionality',
+  [TokenType.collateralLSP7Pausable]:
+    'Extends an existing LSP7 with pausable remote transfer functionality',
   [TokenType.collateralCctp]:
     'A collateral token that can be transferred via CCTP',
   [TokenType.native]:
     'Extends the native token with remote transfer functionality',
+  [TokenType.nativePausable]:
+    'Extends the native token with pausable remote transfer functionality',
   [TokenType.collateralVault]:
     'Extends an existing ERC4626 with remote transfer functionality. Yields are manually claimed by owner.',
   [TokenType.collateralVaultRebase]:
@@ -67,8 +77,10 @@ const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
   // TODO: describe
   [TokenType.syntheticUri]: '',
   [TokenType.syntheticLSP8]: '',
+  [TokenType.syntheticLSP8Pausable]: '',
   [TokenType.collateralUri]: '',
   [TokenType.collateralLSP8]: '',
+  [TokenType.collateralLSP8Pausable]: '',
   [TokenType.nativeScaled]: '',
 };
 
@@ -238,7 +250,9 @@ export async function createWarpRouteDeployConfig({
 
     switch (type) {
       case TokenType.collateral:
+      case TokenType.collateralPausable:
       case TokenType.collateralLSP7:
+      case TokenType.collateralLSP7Pausable:
       case TokenType.XERC20:
       case TokenType.XERC20Lockbox:
       case TokenType.collateralFiat:
@@ -253,6 +267,7 @@ export async function createWarpRouteDeployConfig({
         };
         break;
       case TokenType.collateralLSP8:
+      case TokenType.collateralLSP8Pausable:
       case TokenType.collateralUri:
         result[chain] = {
           type,
@@ -303,6 +318,7 @@ export async function createWarpRouteDeployConfig({
         };
         break;
       case TokenType.syntheticLSP8:
+      case TokenType.syntheticLSP8Pausable:
       case TokenType.syntheticUri:
         result[chain] = {
           type,
@@ -313,8 +329,11 @@ export async function createWarpRouteDeployConfig({
         };
         break;
       case TokenType.native:
+      case TokenType.nativePausable:
       case TokenType.syntheticLSP7:
+      case TokenType.syntheticLSP7Pausable:
       case TokenType.synthetic:
+      case TokenType.syntheticPausable:
         result[chain] = {
           type,
           owner,
