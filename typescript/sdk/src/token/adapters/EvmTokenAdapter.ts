@@ -1,5 +1,11 @@
 import { LSP4DataKeys } from '@lukso/lsp4-contracts';
 import {
+  HypLSP7,
+  HypLSP7Collateral,
+  HypLSP7Collateral__factory,
+  HypLSP7__factory,
+} from '@lukso/lsp-hyperlane-token-routers';
+import {
   BigNumber,
   PopulatedTransaction,
   constants as ethersConstants,
@@ -19,10 +25,6 @@ import {
   HypERC4626Collateral,
   HypERC4626Collateral__factory,
   HypERC4626__factory,
-  HypLSP7,
-  HypLSP7Collateral,
-  HypLSP7Collateral__factory,
-  HypLSP7__factory,
   HypXERC20,
   HypXERC20Lockbox,
   HypXERC20Lockbox__factory,
@@ -32,8 +34,6 @@ import {
   IXERC20VS,
   IXERC20VS__factory,
   IXERC20__factory,
-  LSP7DigitalAssetInitAbstract,
-  LSP7DigitalAssetInitAbstract__factory,
   ValueTransferBridge__factory,
 } from '@hyperlane-xyz/core';
 import {
@@ -203,9 +203,7 @@ export class EvmTokenAdapter<T extends ERC20 = ERC20>
 }
 
 // Interacts with LSP7 contracts
-export class EvmLSP7TokenAdapter<
-    T extends LSP7DigitalAssetInitAbstract = LSP7DigitalAssetInitAbstract,
-  >
+export class EvmLSP7TokenAdapter<T extends HypLSP7 = HypLSP7>
   extends EvmNativeTokenAdapter
   implements ITokenAdapter<PopulatedTransaction>
 {
@@ -215,7 +213,7 @@ export class EvmLSP7TokenAdapter<
     public readonly chainName: ChainName,
     public readonly multiProvider: MultiProtocolProvider,
     public readonly addresses: { token: Address },
-    public readonly contractFactory: any = LSP7DigitalAssetInitAbstract__factory,
+    public readonly contractFactory: any = HypLSP7__factory,
   ) {
     super(chainName, multiProvider, addresses);
     this.contract = contractFactory.connect(
@@ -232,8 +230,8 @@ export class EvmLSP7TokenAdapter<
   override async getMetadata(isNft?: boolean): Promise<TokenMetadata> {
     const [decimals, symbolHex, nameHex] = await Promise.all([
       isNft ? 0 : this.contract.decimals(),
-      this.contract['getData(bytes32)'](LSP4DataKeys.LSP4TokenSymbol),
-      this.contract['getData(bytes32)'](LSP4DataKeys.LSP4TokenName),
+      this.contract['getData'](LSP4DataKeys.LSP4TokenSymbol),
+      this.contract['getData'](LSP4DataKeys.LSP4TokenName),
     ]);
 
     const symbol = toUtf8String(symbolHex);
@@ -255,9 +253,11 @@ export class EvmLSP7TokenAdapter<
     weiAmountOrId,
     recipient,
   }: TransferParams): Promise<PopulatedTransaction> {
-    return this.contract.populateTransaction[
-      'authorizeOperator(address,uint256,bytes)'
-    ](recipient, weiAmountOrId.toString(), '0x');
+    return this.contract.populateTransaction['authorizeOperator'](
+      recipient,
+      weiAmountOrId.toString(),
+      '0x',
+    );
   }
 
   override populateTransferTx({

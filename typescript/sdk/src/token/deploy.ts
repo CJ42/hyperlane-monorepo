@@ -1,4 +1,5 @@
 import { LSP4DataKeys } from '@lukso/lsp4-contracts';
+import { HypLSP7__factory } from '@lukso/lsp-hyperlane-token-routers';
 import { constants } from 'ethers';
 import { toUtf8String } from 'ethers/lib/utils.js';
 
@@ -6,7 +7,6 @@ import {
   ERC20__factory,
   ERC721Enumerable__factory,
   GasRouter,
-  HypLSP7__factory,
   IERC4626__factory,
   IMessageTransmitter__factory,
   IXERC20Lockbox__factory,
@@ -558,7 +558,7 @@ export class HypTokenDeployer extends TokenDeployer<HypTokenFactories> {
   router(contracts: HyperlaneContracts<HypTokenFactories>): GasRouter {
     for (const key of objKeys(hypTokenFactories)) {
       if (contracts[key]) {
-        return contracts[key];
+        return contracts[key] as GasRouter;
       }
     }
     throw new Error('No matching contract found');
@@ -592,7 +592,7 @@ export class HypNFTDeployer extends TokenDeployer<HypNFTFactories> {
   router(contracts: HyperlaneContracts<HypNFTFactories>): GasRouter {
     for (const key of objKeys(hypNFTFactories)) {
       if (contracts[key]) {
-        return contracts[key];
+        return contracts[key] as GasRouter;
       }
     }
     throw new Error('No matching contract found');
