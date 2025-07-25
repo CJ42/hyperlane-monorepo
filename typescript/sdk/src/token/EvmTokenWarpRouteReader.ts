@@ -1,4 +1,5 @@
 import { LSP4DataKeys } from '@lukso/lsp4-contracts';
+import { HypLSP7Collateral__factory } from '@lukso/lsp-hyperlane-token-routers';
 import { compareVersions } from 'compare-versions';
 import { BigNumber, Contract } from 'ethers';
 import { toUtf8String } from 'ethers/lib/utils.js';
@@ -9,7 +10,6 @@ import {
   HypERC4626Collateral__factory,
   HypERC4626OwnerCollateral__factory,
   HypERC4626__factory,
-  HypLSP7Collateral__factory,
   HypLSP7__factory,
   HypXERC20Lockbox__factory,
   HypXERC20__factory,

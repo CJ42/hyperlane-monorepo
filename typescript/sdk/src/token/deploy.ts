@@ -543,7 +543,7 @@ export class HypTokenDeployer extends TokenDeployer<HypTokenFactories> {
   router(contracts: HyperlaneContracts<HypTokenFactories>): GasRouter {
     for (const key of objKeys(hypTokenFactories)) {
       if (contracts[key]) {
-        return contracts[key];
+        return contracts[key] as GasRouter;
       }
     }
     throw new Error('No matching contract found');
@@ -577,7 +577,7 @@ export class HypNFTDeployer extends TokenDeployer<HypNFTFactories> {
   router(contracts: HyperlaneContracts<HypNFTFactories>): GasRouter {
     for (const key of objKeys(hypNFTFactories)) {
       if (contracts[key]) {
-        return contracts[key];
+        return contracts[key] as GasRouter;
       }
     }
     throw new Error('No matching contract found');

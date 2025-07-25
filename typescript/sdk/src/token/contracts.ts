@@ -1,4 +1,11 @@
 import {
+  HypLSP7Collateral__factory,
+  HypLSP7__factory,
+  HypLSP8Collateral__factory,
+  HypLSP8__factory,
+} from '@lukso/lsp-hyperlane-token-routers';
+
+import {
   HypERC20CollateralPausable__factory,
   HypERC20Collateral__factory,
   HypERC20Pausable__factory,
@@ -12,13 +19,9 @@ import {
   HypERC4626__factory,
   HypFiatToken__factory,
   HypLSP7CollateralPausable__factory,
-  HypLSP7Collateral__factory,
   HypLSP7Pausable__factory,
-  HypLSP7__factory,
   HypLSP8CollateralPausable__factory,
-  HypLSP8Collateral__factory,
   HypLSP8Pausable__factory,
-  HypLSP8__factory,
   HypNativePausable__factory,
   HypNative__factory,
   HypXERC20Lockbox__factory,

@@ -8388,7 +8388,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperlane-xyz/core@npm:8.2.0, @hyperlane-xyz/core@workspace:solidity":
+"@hyperlane-xyz/core@npm:8.2.0, @hyperlane-xyz/core@npm:^8.1.1, @hyperlane-xyz/core@workspace:solidity":
   version: 0.0.0-use.local
   resolution: "@hyperlane-xyz/core@workspace:solidity"
   dependencies:
@@ -8606,6 +8606,7 @@ __metadata:
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@eslint/js": "npm:^9.15.0"
+    "@lukso/lsp-hyperlane-token-routers": ./lukso-lsp-hyperlane-token-routers-0.1.0.tgz
     "@trivago/prettier-plugin-sort-imports": "npm:^5.2.2"
     "@typescript-eslint/eslint-plugin": "npm:^8.1.6"
     "@typescript-eslint/parser": "npm:^8.1.6"
@@ -9848,6 +9849,18 @@ __metadata:
   dependencies:
     "@lit-labs/ssr-dom-shim": "npm:^1.0.0"
   checksum: 10/664c899bb0b144590dc4faf83b358b1504810eac107778c3aeb384affc65a7ef4eda754944bcc34a57237db03dff145332406345ac24da19ca37cf4b3cb343d3
+  languageName: node
+  linkType: hard
+
+"@lukso/lsp-hyperlane-token-routers@file:./lukso-lsp-hyperlane-token-routers-0.1.0.tgz::locator=%40hyperlane-xyz%2Fmonorepo%40workspace%3A.":
+  version: 0.1.0
+  resolution: "@lukso/lsp-hyperlane-token-routers@file:./lukso-lsp-hyperlane-token-routers-0.1.0.tgz#./lukso-lsp-hyperlane-token-routers-0.1.0.tgz::hash=922c99&locator=%40hyperlane-xyz%2Fmonorepo%40workspace%3A."
+  dependencies:
+    "@erc725/smart-contracts-v8": "npm:@erc725/smart-contracts@8.0.0"
+    "@hyperlane-xyz/core": "npm:^8.1.1"
+    "@lukso/lsp7-contracts": "npm:^0.16.8"
+    "@lukso/lsp8-contracts": "npm:^0.16.7"
+  checksum: 10/0eefe1001e15ef400a20cc6c4f9550ca66188a185b1da4e75d8a6483783fe04a279eeb6b12e25e48e02925076022b7e080ac761775e53d3cc003146745823256
   languageName: node
   linkType: hard
 
