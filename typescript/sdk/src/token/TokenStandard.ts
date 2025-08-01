@@ -138,6 +138,8 @@ export const TOKEN_NFT_STANDARDS = [
 export const TOKEN_COLLATERALIZED_STANDARDS = [
   TokenStandard.EvmHypCollateral,
   TokenStandard.EvmHypNative,
+  TokenStandard.EvmHypLSP7Collateral,
+  TokenStandard.EvmHypLSP8Collateral,
   TokenStandard.SealevelHypCollateral,
   TokenStandard.SealevelHypNative,
   TokenStandard.CwHypCollateral,
@@ -165,10 +167,14 @@ export const MINT_LIMITED_STANDARDS = [
 export const TOKEN_HYP_STANDARDS = [
   TokenStandard.EvmHypNative,
   TokenStandard.EvmHypCollateral,
+  TokenStandard.EvmHypLSP7Collateral,
+  TokenStandard.EvmHypLSP8Collateral,
   TokenStandard.EvmHypCollateralFiat,
   TokenStandard.EvmHypOwnerCollateral,
   TokenStandard.EvmHypRebaseCollateral,
   TokenStandard.EvmHypSynthetic,
+  TokenStandard.EvmHypLSP7Synthetic,
+  TokenStandard.EvmHypLSP8Synthetic,
   TokenStandard.EvmHypSyntheticRebase,
   TokenStandard.EvmHypXERC20,
   TokenStandard.EvmHypXERC20Lockbox,
