@@ -204,9 +204,21 @@ describe('EvmERC20WarpHyperlaneModule', async () => {
         token: token.address,
         allowedRebalancers,
       },
+      [TokenType.collateralPausable]: {
+        ...baseConfig,
+        type: TokenType.collateralPausable,
+        token: token.address,
+        allowedRebalancers,
+      },
       [TokenType.collateralLSP7]: {
         ...baseConfig,
         type: TokenType.collateral,
+        token: token.address,
+        allowedRebalancers,
+      },
+      [TokenType.collateralLSP7Pausable]: {
+        ...baseConfig,
+        type: TokenType.collateralPausable,
         token: token.address,
         allowedRebalancers,
       },
@@ -216,9 +228,20 @@ describe('EvmERC20WarpHyperlaneModule', async () => {
         token: token.address,
         allowedRebalancers,
       },
+      [TokenType.collateralLSP8Pausable]: {
+        ...baseConfig,
+        type: TokenType.collateralPausable,
+        token: token.address,
+        allowedRebalancers,
+      },
       [TokenType.native]: {
         ...baseConfig,
         type: TokenType.native,
+        allowedRebalancers,
+      },
+      [TokenType.nativePausable]: {
+        ...baseConfig,
+        type: TokenType.nativePausable,
         allowedRebalancers,
       },
       [TokenType.nativeScaled]: {

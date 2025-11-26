@@ -84,7 +84,11 @@ export const BaseMovableTokenConfigSchema = z.object({
 });
 
 export const NativeTokenConfigSchema = TokenMetadataSchema.partial().extend({
-  type: z.enum([TokenType.native, TokenType.nativeScaled]),
+  type: z.enum([
+    TokenType.native,
+    TokenType.nativePausable,
+    TokenType.nativeScaled,
+  ]),
   ...BaseMovableTokenConfigSchema.shape,
 });
 export type NativeTokenConfig = z.infer<typeof NativeTokenConfigSchema>;
@@ -117,12 +121,15 @@ export const CollateralTokenConfigSchema = TokenMetadataSchema.partial().extend(
   {
     type: z.enum([
       TokenType.collateral,
-      TokenType.collateralLSP7,
-      TokenType.collateralLSP8,
       TokenType.collateralVault,
       TokenType.collateralVaultRebase,
       TokenType.collateralFiat,
       TokenType.collateralUri,
+      TokenType.collateralPausable,
+      TokenType.collateralLSP7,
+      TokenType.collateralLSP7Pausable,
+      TokenType.collateralLSP8,
+      TokenType.collateralLSP8Pausable,
     ]),
     token: z
       .string()
@@ -222,8 +229,11 @@ export const SyntheticTokenConfigSchema = TokenMetadataSchema.partial().extend({
   type: z.enum([
     TokenType.synthetic,
     TokenType.syntheticUri,
+    TokenType.syntheticPausable,
     TokenType.syntheticLSP7,
+    TokenType.syntheticLSP7Pausable,
     TokenType.syntheticLSP8,
+    TokenType.syntheticLSP8Pausable,
   ]),
   initialSupply: z.string().or(z.number()).optional(),
 });
