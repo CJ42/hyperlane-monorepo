@@ -42,9 +42,12 @@ import { createAdvancedIsmConfig } from './ism.js';
 
 const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
   [TokenType.synthetic]: 'A new ERC20 with remote transfer functionality',
+  [TokenType.syntheticLSP7]: 'A new LSP7 with remote transfer functionality',
   [TokenType.syntheticRebase]: `A rebasing ERC20 with remote transfer functionality. Must be paired with ${TokenType.collateralVaultRebase}`,
   [TokenType.collateral]:
     'Extends an existing ERC20 with remote transfer functionality',
+  [TokenType.collateralLSP7]:
+    'Extends an existing LSP7 with remote transfer functionality',
   [TokenType.collateralCctp]:
     'A collateral token that can be transferred via CCTP',
   [TokenType.native]:
@@ -67,7 +70,9 @@ const TYPE_DESCRIPTIONS: Record<TokenType, string> = {
     'An ETH token that can be transferred via Everclear intents',
   // TODO: describe
   [TokenType.syntheticUri]: '',
+  [TokenType.syntheticLSP8]: '',
   [TokenType.collateralUri]: '',
+  [TokenType.collateralLSP8]: '',
   [TokenType.nativeScaled]: '',
 };
 
@@ -237,6 +242,7 @@ export async function createWarpRouteDeployConfig({
 
     switch (type) {
       case TokenType.collateral:
+      case TokenType.collateralLSP7:
       case TokenType.XERC20:
       case TokenType.XERC20Lockbox:
       case TokenType.collateralFiat:
@@ -251,6 +257,7 @@ export async function createWarpRouteDeployConfig({
         };
         break;
       case TokenType.collateralUri:
+      case TokenType.collateralLSP8:
         result[chain] = {
           type,
           owner,
@@ -300,6 +307,7 @@ export async function createWarpRouteDeployConfig({
         };
         break;
       case TokenType.syntheticUri:
+      case TokenType.syntheticLSP8:
         result[chain] = {
           type,
           owner,
@@ -310,6 +318,7 @@ export async function createWarpRouteDeployConfig({
         break;
       case TokenType.native:
       case TokenType.synthetic:
+      case TokenType.syntheticLSP7:
         result[chain] = {
           type,
           owner,

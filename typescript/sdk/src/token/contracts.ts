@@ -1,3 +1,9 @@
+import {
+  HypLSP7Collateral__factory,
+  HypLSP7__factory,
+  HypLSP8Collateral__factory,
+  HypLSP8__factory,
+} from '@lukso/lsp-hyperlane-token-routers';
 import { ContractFactory } from 'ethers';
 
 import {
@@ -28,6 +34,8 @@ export const hypERC20contracts = {
   [TokenType.synthetic]: 'HypERC20',
   [TokenType.syntheticRebase]: 'HypERC4626',
   [TokenType.syntheticUri]: 'HypERC721',
+  [TokenType.syntheticLSP7]: 'HypLSP7',
+  [TokenType.syntheticLSP8]: 'HypLSP8',
   [TokenType.collateral]: 'HypERC20Collateral',
   [TokenType.collateralFiat]: 'HypFiatToken',
   [TokenType.collateralUri]: 'HypERC721Collateral',
@@ -36,6 +44,8 @@ export const hypERC20contracts = {
   [TokenType.collateralVault]: 'HypERC4626OwnerCollateral',
   [TokenType.collateralVaultRebase]: 'HypERC4626Collateral',
   [TokenType.collateralCctp]: 'TokenBridgeCctp',
+  [TokenType.collateralLSP7]: 'HypLSP7Collateral',
+  [TokenType.collateralLSP8]: 'HypLSP8Collateral',
   [TokenType.native]: 'HypNative',
   [TokenType.nativeOpL2]: 'OPL2TokenBridgeNative',
   [TokenType.nativeOpL1]: 'OpL1TokenBridgeNative',
@@ -53,7 +63,11 @@ type HypERC20TokenType = Exclude<
 
 export const hypERC20factories = {
   [TokenType.synthetic]: new HypERC20__factory(),
+  [TokenType.syntheticLSP7]: new HypLSP7__factory(),
+  [TokenType.syntheticLSP8]: new HypLSP8__factory(),
   [TokenType.collateral]: new HypERC20Collateral__factory(),
+  [TokenType.collateralLSP7]: new HypLSP7Collateral__factory(),
+  [TokenType.collateralLSP8]: new HypLSP8Collateral__factory(),
   // use V1 here to satisfy type requirements
   [TokenType.collateralCctp]: new TokenBridgeCctpV1__factory(),
   [TokenType.collateralVault]: new HypERC4626OwnerCollateral__factory(),
@@ -83,8 +97,10 @@ export function getCctpFactory(version: 'V1' | 'V2') {
 export const hypERC721contracts = {
   [TokenType.collateralUri]: 'HypERC721URICollateral',
   [TokenType.collateral]: 'HypERC721Collateral',
+  [TokenType.collateralLSP8]: 'HypLSP8Collateral',
   [TokenType.syntheticUri]: 'HypERC721URIStorage',
   [TokenType.synthetic]: 'HypERC721',
+  [TokenType.syntheticLSP8]: 'HypLSP8',
 } as const;
 
 export type HypERC721contracts = typeof hypERC721contracts;
@@ -92,8 +108,10 @@ export type HypERC721contracts = typeof hypERC721contracts;
 export const hypERC721factories = {
   [TokenType.collateralUri]: new HypERC721URICollateral__factory(),
   [TokenType.collateral]: new HypERC721Collateral__factory(),
+  [TokenType.collateralLSP8]: new HypLSP8Collateral__factory(),
   [TokenType.syntheticUri]: new HypERC721URIStorage__factory(),
   [TokenType.synthetic]: new HypERC721__factory(),
+  [TokenType.syntheticLSP8]: new HypLSP8__factory(),
 } as const;
 export type HypERC721Factories = typeof hypERC721factories;
 

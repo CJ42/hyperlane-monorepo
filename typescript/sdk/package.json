@@ -16,6 +16,7 @@
     "@hyperlane-xyz/radix-sdk": "19.10.0",
     "@hyperlane-xyz/starknet-core": "19.10.0",
     "@hyperlane-xyz/utils": "19.10.0",
+    "@lukso/lsp-hyperlane-token-routers": "^0.2.1",
     "@safe-global/api-kit": "4.0.0",
     "@safe-global/protocol-kit": "6.1.1",
     "@safe-global/safe-core-sdk-types": "5.1.0",
