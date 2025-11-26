@@ -36,7 +36,11 @@ import { configureLogger, errorRed } from './src/logger.js';
 import { checkVersion } from './src/utils/version-check.js';
 import { VERSION } from './src/version.js';
 
-console.log(chalk.blue('Hyperlane'), chalk.magentaBright('CLI'));
+console.log(
+  chalk.blue('Hyperlane'),
+  chalk.magentaBright('CLI'),
+  chalk.bgMagenta('LUKSO Version with LSP7/8 + Pausable Token Routers'),
+);
 
 await checkVersion();
 
