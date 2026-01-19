@@ -1,4 +1,5 @@
 import { LSP4DataKeys } from '@lukso/lsp4-contracts';
+import { INTERFACE_ID_LSP7 } from '@lukso/lsp7-contracts';
 import {
   HypLSP7Collateral__factory,
   HypLSP7__factory,
@@ -548,6 +549,12 @@ export class EvmERC20WarpRouteReader extends EvmRouterReader {
         return TokenType.native;
       }
 
+      const isSyntheticLSP7Token =
+        await this.isSyntheticLSP7WarpToken(warpRouteAddress);
+      if (isSyntheticLSP7Token) {
+        return TokenType.syntheticLSP7;
+      }
+
       const isSyntheticToken = await this.isSyntheticWarpToken(
         warpRouteAddress,
         hasTokenFeeInterface,
@@ -627,6 +634,29 @@ export class EvmERC20WarpRouteReader extends EvmRouterReader {
     } catch (error) {
       this.logger.debug(
         `Warp route token at address "${warpRouteAddress}" on chain "${this.chain}" is not a ${TokenType.synthetic}`,
+        error,
+      );
+
+      return false;
+    }
+  }
+
+  private async isSyntheticLSP7WarpToken(
+    warpRouteAddress: Address,
+  ): Promise<boolean> {
+    try {
+      const tokenRouter = HypLSP7__factory.connect(
+        warpRouteAddress,
+        this.provider,
+      );
+
+      const supportsLsp7Interface =
+        await tokenRouter.supportsInterface(INTERFACE_ID_LSP7);
+
+      return supportsLsp7Interface;
+    } catch (error) {
+      this.logger.debug(
+        `Warp route token at address "${warpRouteAddress}" on chain "${this.chain}" is not a ${TokenType.syntheticLSP7}`,
         error,
       );
 
