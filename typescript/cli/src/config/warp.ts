@@ -254,7 +254,9 @@ export async function createWarpRouteDeployConfig({
 
     switch (type) {
       case TokenType.collateral:
+      case TokenType.collateralPausable:
       case TokenType.collateralLSP7:
+      case TokenType.collateralLSP7Pausable:
       case TokenType.XERC20:
       case TokenType.XERC20Lockbox:
       case TokenType.collateralFiat:
@@ -270,6 +272,7 @@ export async function createWarpRouteDeployConfig({
         break;
       case TokenType.collateralUri:
       case TokenType.collateralLSP8:
+      case TokenType.collateralLSP8Pausable:
         result[chain] = {
           type,
           owner,
@@ -320,6 +323,7 @@ export async function createWarpRouteDeployConfig({
         break;
       case TokenType.syntheticUri:
       case TokenType.syntheticLSP8:
+      case TokenType.syntheticLSP8Pausable:
         result[chain] = {
           type,
           owner,
@@ -329,8 +333,11 @@ export async function createWarpRouteDeployConfig({
         };
         break;
       case TokenType.native:
+      case TokenType.nativePausable:
       case TokenType.synthetic:
+      case TokenType.syntheticPausable:
       case TokenType.syntheticLSP7:
+      case TokenType.syntheticLSP7Pausable:
         result[chain] = {
           type,
           owner,
